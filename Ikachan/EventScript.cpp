@@ -71,7 +71,7 @@ RECT rcLineClip = { (SURFACE_WIDTH / 2) - 136, SURFACE_HEIGHT - 50, (SURFACE_WID
 #define FADE_TIME (FADE_WIDTH + FADE_HEIGHT + 15)
 
 //Fading and other screen effects
-BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
+bool ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 {
 	switch (fade->mode)
 	{
@@ -91,7 +91,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 				if (bubble_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[bubble_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 1;
 					caretsp->ani_no = 0;
 					caretsp->num = 2;
@@ -108,7 +108,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 				if (star_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[star_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 0;
 					caretsp->ani_no = 0;
 					caretsp->num = 2;
@@ -140,7 +140,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 			if (++fade->wait <= FADE_TIME)
 				break;
 			fade->mode = 0;
-			return TRUE;
+			return true;
 		case FADE_MODE_FADEIN:
 			for (int y = 0; y < FADE_HEIGHT; y++)
 			{
@@ -157,7 +157,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 			if (++fade->wait <= FADE_TIME)
 				break;
 			fade->mode = 0;
-			return TRUE;
+			return true;
 		case FADE_MODE_QUAKE2:
 			if (!(++fade->wait % 4))
 			{
@@ -170,7 +170,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 				if (bubble_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[bubble_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 1;
 					caretsp->ani_no = 0;
 					caretsp->num = 2;
@@ -187,7 +187,7 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 				if (star_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[star_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 0;
 					caretsp->ani_no = 0;
 					caretsp->num = 2;
@@ -206,13 +206,13 @@ BOOL ProcFade(FADE *fade, FRAME *frame, CARET_SPAWNER *caret_spawner)
 	
 	if (fade->mask)
 		CortBox(&grcFull, 0x000000);
-	return FALSE;
+	return false;
 }
 
 //Number drawing
 void PutNumber(int x, int y, int no)
 {
-	BOOL v3 = FALSE;
+	bool v3 = false;
 	int v4;
 	for (int i = 0; i < 6; i++)
 	{
@@ -230,7 +230,7 @@ void PutNumber(int x, int y, int no)
 
 void PutNumber2(int x, int y, int no)
 {
-	BOOL v3 = FALSE;
+	bool v3 = false;
 	int v4;
 	for (int i = 0; i < 6; i++)
 	{
@@ -247,45 +247,50 @@ void PutNumber2(int x, int y, int no)
 }
 
 //Some debug function I think
-void DebugPutText(LPCTSTR text)
+void DebugPutText(const char* text)
 {
-	PutText(0, 1, text, 0xFFFFFF, TRUE);
+	PutText(0, 1, text, 0xFFFFFF, true);
 }
 
-//Read event script file
-BOOL ReadEventScript(LPCTSTR path, EVENT_SCR *ptx)
+//Read event script file (TODO)
+bool ReadEventScript(const char* path, EVENT_SCR *ptx)
 {
+#if 0
 	//Get filesize
 	HANDLE hFile = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ptx->size = GetFileSize(hFile, NULL);
 	CloseHandle(hFile);
 	
 	//Allocate data
-	ptx->data = (LPSTR)LocalAlloc(LPTR, ptx->size + 1);
+	ptx->data = (char*)LocalAlloc(LPTR, ptx->size + 1);
 	
 	//Open file
 	FILE *fp = fopen(path, "rt");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read file
 	fread(ptx->data, ptx->size, 1, fp);
 	fclose(fp);
-	return TRUE;
+	return true;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	return false;
+#endif
 }
 
 //Saving
-LPCSTR save_magic = "ika_en03";
+const char* save_magic = "ika_en03";
 
-BOOL SaveRecord(ITEMS *items, MAP *map, NPCHAR *npc)
+bool SaveRecord(ITEMS *items, MAP *map, NPCHAR *npc)
 {
 	//Open file
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, "Ika.rec");
 	
 	FILE *fp = fopen(path, "wb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Write magic
 	fwrite(save_magic, 1, 8, fp);
@@ -321,25 +326,25 @@ BOOL SaveRecord(ITEMS *items, MAP *map, NPCHAR *npc)
 	}
 	
 	fclose(fp);
-	return TRUE;
+	return true;
 }
 
-BOOL LoadRecord(ITEMS *items, MAP *map, NPCHAR *npc)
+bool LoadRecord(ITEMS *items, MAP *map, NPCHAR *npc)
 {
 	//Open file
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, "Ika.rec");
 	
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Verify magic
 	char magic[8];
 	fread(magic, 1, 8, fp);
 	for (int i = 0; i < 8; i++)
 		if (magic[i] != save_magic[i])
-			return FALSE; //strncmp will be real in
+			return false; //strncmp will be real in
 	
 	//Read Ikachan's state
 	fread(&gMC.x, 4, 1, fp);
@@ -372,11 +377,11 @@ BOOL LoadRecord(ITEMS *items, MAP *map, NPCHAR *npc)
 	}
 	
 	fclose(fp);
-	return TRUE;
+	return true;
 }
 
 //Event script functions
-BOOL JumpEventScript(EVENT_SCR *ptx)
+bool JumpEventScript(EVENT_SCR *ptx)
 {
 	for (ptx->p_read = 0; ptx->p_read < ptx->size; ptx->p_read++)
 	{
@@ -394,12 +399,12 @@ BOOL JumpEventScript(EVENT_SCR *ptx)
 			
 			//Check if this is our intended event
 			if (no == ptx->event_no)
-				return TRUE;
+				return true;
 			if (no > ptx->event_no)
-				return FALSE;
+				return false;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 short GetEventScriptNo(EVENT_SCR *ptx)
@@ -429,7 +434,7 @@ void PutEventScriptCursor(EVENT_SCR *ptx)
 
 char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPIYO_CONTROL *piyocont, FADE *fade, FRAME *frame)
 {
-	TCHAR c[3] = { 0 };
+	char c[3] = { 0 };
 
 	switch (ptx->mode)
 	{
@@ -583,8 +588,8 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			c[0] = ptx->data[ptx->p_read];
 			c[1] = ptx->data[ptx->p_read + 1];
 			PlaySoundObject(SOUND_ID_MESSAGE, SOUND_MODE_PLAY);
-			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
-			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
+			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
+			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
 			ptx->p_write += 2;
 			ptx->p_read += 2;
 			return 0;
@@ -603,8 +608,8 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			c[0] = ptx->data[ptx->p_read];
 			c[1] = 0;
 			PlaySoundObject(SOUND_ID_MESSAGE, SOUND_MODE_PLAY);
-			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
-			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
+			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
+			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
 			ptx->p_write++;
 			ptx->p_read++;
 			return 0;
@@ -623,8 +628,8 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			c[0] = ptx->data[ptx->p_read];
 			c[1] = 0;
 			PlaySoundObject(SOUND_ID_MESSAGE, SOUND_MODE_PLAY);
-			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
-			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
+			PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
+			PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
 			ptx->p_write++;
 			ptx->p_read++;
 			return 0;
@@ -646,8 +651,8 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 				c[0] = ptx->data[ptx->p_read];
 				c[1] = 0;
 				PlaySoundObject(SOUND_ID_MESSAGE, SOUND_MODE_PLAY);
-				PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
-				PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), FALSE);
+				PutText2((8 * ptx->p_write) + 1, 1, c, 0xFF0000, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
+				PutText2(8 * ptx->p_write, 0, c, 0xFFFFFF, SURFACE_ID_TEXT0 + (ptx->line % 2), false);
 				ptx->p_write++;
 				ptx->p_read++;
 				return 0;
@@ -700,7 +705,7 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			//Check if flag is set
 			ptx->p_read += 3;
 			x = GetEventScriptNo(ptx);
-			if (GetNPCFlag(x) == TRUE)
+			if (GetNPCFlag(x) == true)
 			{
 				//Jump to event given
 				ptx->p_read++;
@@ -736,7 +741,7 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			//Check if we have requested item
 			ptx->p_read += 3;
 			x = GetEventScriptNo(ptx);
-			if (CheckItem(items, (char)x) == TRUE)
+			if (CheckItem(items, (char)x) == true)
 			{
 				//Jump to event given
 				ptx->p_read++;
@@ -758,7 +763,7 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 			ptx->p_read++;
 			y = GetEventScriptNo(ptx);
 			ptx->p_read++;
-			map->data[x + map->width * y] = (BYTE)GetEventScriptNo(ptx);
+			map->data[x + map->width * y] = (unsigned char)GetEventScriptNo(ptx);
 			return 0;
 		}
 		if (IS_COMMAND('c','m'))
@@ -830,14 +835,14 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 		{
 			//Fade mask
 			ptx->p_read += 3;
-			fade->mask = TRUE;
+			fade->mask = true;
 			return 0;
 		}
 		if (IS_COMMAND('n','m'))
 		{
 			//Fade unmask
 			ptx->p_read += 3;
-			fade->mask = FALSE;
+			fade->mask = false;
 			return 0;
 		}
 		if (IS_COMMAND('y','n'))
@@ -853,7 +858,7 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 		{
 			//Close message box
 			ptx->p_read += 3;
-			ptx->msg_box = FALSE;
+			ptx->msg_box = false;
 			return 0;
 		}
 		if (IS_COMMAND('d','s'))
@@ -918,7 +923,7 @@ char EventScriptProc(EVENT_SCR *ptx, ITEMS *items, NPCHAR *npc, MAP *map, PIYOPI
 		{
 			//Restart
 			gMC.carry = 0;
-			gMC.cond = TRUE;
+			gMC.cond = true;
 			gMC.unit = 0;
 			gMC.ani_no = 0;
 			gMC.ani_wait = 0;
@@ -1052,7 +1057,7 @@ void PutMsgBox(EVENT_SCR *ptx)
 {
 	static RECT rcMsgBox = { 0, 0, 300, 48 };
 
-	if (ptx->msg_box == TRUE)
+	if (ptx->msg_box == true)
 	{
 		++ptx->ani_cursor;
 		PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 152, SURFACE_HEIGHT - 56, &rcMsgBox, SURFACE_ID_MSGBOX);

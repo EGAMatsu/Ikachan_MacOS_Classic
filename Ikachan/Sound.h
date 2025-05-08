@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
 
 enum SOUND_ID
 {
@@ -19,7 +19,7 @@ enum SOUND_ID
 	SOUND_ID_SAVE = 13,
 	SOUND_ID_YESNO = 14,
 	SOUND_ID_QUAKE = 15,
-	SOUND_ID_BOSSOUCH = 20,
+	SOUND_ID_BOSSOUCH = 20
 };
 
 enum SOUND_MODE
@@ -29,12 +29,12 @@ enum SOUND_MODE
 	SOUND_MODE_PLAY = 1
 };
 
-BOOL InitDirectSound(HWND hwnd);
+//bool InitDirectSound(HWND hwnd);
 void EndDirectSound();
 void ReleaseSoundObject(int no);
-BOOL InitSoundObject(LPCSTR resname, int no);
+bool InitSoundObject(const char* resname, int no);
 void PlaySoundObject(int no, int mode);
-void ChangeSoundFrequency(int no, DWORD rate);
+void ChangeSoundFrequency(int no, unsigned long rate);
 void ChangeSoundVolume(int no, long volume);
 void ChangeSoundPan(int no, long pan);
-BOOL MakePiyoPiyoSoundObject(CHAR *wave, BYTE *envelope, int octave, int data_size, int no);
+bool MakePiyoPiyoSoundObject(char *wave, unsigned char *envelope, int octave, int data_size, int no);

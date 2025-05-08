@@ -1,6 +1,6 @@
 #include "Flags.h"
 
-BYTE gFlagNPC[FLAG_BYTES];
+unsigned char gFlagNPC[FLAG_BYTES];
 
 void InitFlags()
 {
@@ -8,28 +8,28 @@ void InitFlags()
 		gFlagNPC[i] = 0;
 }
 
-BOOL SetNPCFlag(LONG a)
+bool SetNPCFlag(long a)
 {
 	if (a > (FLAG_BYTES * 8))
-		return FALSE;
+		return false;
 	gFlagNPC[a / 8] |= 1 << a % 8;
-	return TRUE;
+	return true;
 }
 
-BOOL CutNPCFlag(LONG a)
+bool CutNPCFlag(long a)
 {
 	if (a > (FLAG_BYTES * 8))
-		return TRUE;
+		return true;
 	gFlagNPC[a / 8] &= ~(1 << a % 8);
-	return FALSE;
+	return false;
 }
 
-BOOL GetNPCFlag(LONG a)
+bool GetNPCFlag(long a)
 {
 	if (a > (FLAG_BYTES * 8))
-		return FALSE;
+		return false;
 	if (gFlagNPC[a / 8] & (1 << a % 8))
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }

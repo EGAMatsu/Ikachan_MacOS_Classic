@@ -6,13 +6,14 @@
 #include "Player.h"
 #include "Sound.h"
 #include <stdio.h>
+#include <string.h>
 
 //NPC initialization
 void InitNpChar(NPCHAR *npc)
 {
 	for (int i = 0; i < MAX_NPCS; i++)
 	{
-		npc[i].cond = FALSE;
+		npc[i].cond = false;
 		npc[i].type = 0;
 		npc[i].code_char = 0;
 		npc[i].code_event = 0;
@@ -44,7 +45,7 @@ void PutNpChar00(NPCHAR *npc, FRAME *frame)
 		{ 48, 16, 64, 32 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400),
@@ -63,7 +64,7 @@ void PutNpChar01(NPCHAR *npc, FRAME *frame)
 		{ 0, 48, 16, 64 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		//Get framerect
 		RECT *rc = &rcNpc01[(npc->direct * 2) + npc->ani_no];
@@ -97,7 +98,7 @@ void PutNpChar02(NPCHAR *npc, FRAME *frame)
 		{ 16, 16, 32, 32 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400),
@@ -116,7 +117,7 @@ void PutNpChar03(NPCHAR *npc, FRAME *frame)
 		{ 20, 20, 40, 40 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400) - 2,
@@ -138,7 +139,7 @@ void PutNpChar04(NPCHAR *npc, FRAME *frame)
 		{ 16, 8, 24, 16 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400) + 4,
@@ -160,7 +161,7 @@ void PutNpChar05(NPCHAR *npc, FRAME *frame)
 		{ 32, 16, 48, 32 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400),
@@ -179,7 +180,7 @@ void PutNpChar06(NPCHAR *npc, FRAME *frame)
 		{ 30, 20, 60, 40 },
 	};
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400) - 6,
@@ -193,7 +194,7 @@ void PutNpChar07(NPCHAR *npc, FRAME *frame)
 {
 	static RECT rcNpc07 = { 0, 0, 32, 32 };
 	
-	if (npc->cond != FALSE)
+	if (npc->cond != false)
 	{
 		PutBitmap3(&grcFull,
 		           (npc->x / 0x400) - (frame->x / 0x400) - 8,
@@ -220,7 +221,7 @@ NPCPUT gpNpcPutTbl[] = {
 void PutNpChar(NPCHAR *npc, FRAME *frame)
 {
 	for (int i = 0; i < MAX_NPCS; i++, npc++)
-		if (npc->cond != FALSE)
+		if (npc->cond != false)
 			gpNpcPutTbl[npc->code_char](npc, frame);
 }
 
@@ -351,7 +352,7 @@ void ActNpChar02(NPCHAR *npc)
 				npc->xm += 16;
 			
 			//Jump after we've been on the ground for 80 frames
-			if (npc->airborne == FALSE)
+			if (npc->airborne == false)
 				npc->act_wait++;
 			
 			if (npc->act_wait > 80)
@@ -385,7 +386,7 @@ void ActNpChar02(NPCHAR *npc)
 			npc->y += npc->ym;
 			
 			//Do falling animation if airborne
-			if (npc->airborne == TRUE)
+			if (npc->airborne == true)
 				npc->ani_no = 2;
 			break;
 		case 1:
@@ -565,12 +566,12 @@ NPCACT gpNpcActTbl[] = {
 void ActNpChar(NPCHAR *npc)
 {
 	for (int i = 0; i < MAX_NPCS; i++, npc++)
-		if (npc->cond != FALSE)
+		if (npc->cond != false)
 			gpNpcActTbl[npc->code_char](npc);
 }
 
 //NPC collision
-BYTE JudgeHitNpCharBlock(NPCHAR *npc, int x, int y, BYTE flag)
+unsigned char JudgeHitNpCharBlock(NPCHAR *npc, int x, int y, unsigned char flag)
 {
 	if ((flag & 1) && (flag & 2))
 	{
@@ -614,7 +615,7 @@ BYTE JudgeHitNpCharBlock(NPCHAR *npc, int x, int y, BYTE flag)
 		}
 		if ((npc->y / 0x400) >= (y * 16 - 16) && (npc->x / 0x400) < (x * 16 + 12))
 		{
-			npc->airborne = FALSE;
+			npc->airborne = false;
 			npc->y = (y * 16 - 16) << 10;
 			if (npc->ym > 0)
 				npc->ym = 0;
@@ -632,7 +633,7 @@ BYTE JudgeHitNpCharBlock(NPCHAR *npc, int x, int y, BYTE flag)
 		}
 		if ((npc->y / 0x400) >= (y * 16 - 16) && (npc->x / 0x400) > (x * 16 - 12))
 		{
-			npc->airborne = FALSE;
+			npc->airborne = false;
 			npc->y = (y * 16 - 16) << 10;
 			if (npc->ym > 0)
 				npc->ym = 0;
@@ -648,8 +649,8 @@ void HitNpCharMap(NPCHAR *npc, MAP *map)
 	//Collision offsets and flags
 	signed char offx[4];
 	signed char offy[4];
-	BOOLEAN flag1[4];
-	BYTE flag2[4];
+	bool flag1[4];
+	unsigned char flag2[4];
 	
 	offx[0] = 0;
 	offx[1] = 1;
@@ -673,7 +674,7 @@ void HitNpCharMap(NPCHAR *npc, MAP *map)
 	
 	for (int i = 0; i < MAX_NPCS; i++, npc++)
 	{
-		if (npc->cond != FALSE)
+		if (npc->cond != false)
 		{
 			//Get collision position and reset state
 			int x = npc->x / 0x400 / 16;
@@ -695,7 +696,7 @@ void HitNpCharMap(NPCHAR *npc, MAP *map)
 			
 			//Set airborne flag
 			if (v4 <= 0)
-				npc->airborne = TRUE;
+				npc->airborne = true;
 		}
 	}
 }
@@ -704,8 +705,8 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 {
 	for (int i = 0; i < MAX_NPCS; i++, npc++)
 	{
-		BOOL touch = FALSE;
-		if (npc->cond == FALSE)
+		bool touch = false;
+		if (npc->cond == false)
 			continue;
 		
 		//Check for non-solid contact
@@ -734,7 +735,7 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 				gMC.x = npc->x + 0x3400;
 				gMC.xm = 0;
 				gMC.flag |= 1;
-				touch = TRUE;
+				touch = true;
 			}
 			if (gMC.y < (npc->y + 0x3400) && gMC.y > (npc->y + 0x2000) && gMC.x < (npc->x + 0x3000) && gMC.x > (npc->x - 0x3000))
 			{
@@ -743,31 +744,31 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 				gMC.y = npc->y + 0x3400;
 				gMC.ym = 0;
 				gMC.flag |= 2;
-				touch = TRUE;
+				touch = true;
 			}
 			if (gMC.x > (npc->x - 0x3400) && (gMC.x + 0x3FF) < (npc->x - 0x2000) && gMC.y < (npc->y + 0x3000) && gMC.y > (npc->y - 0x3000))
 			{
 				gMC.x = npc->x - 0x3400;
 				gMC.xm = 0;
 				gMC.flag |= 4;
-				touch = TRUE;
+				touch = true;
 			}
 			if (gMC.y >= (npc->y - 0x3400) && gMC.y < (npc->y - 0x2000) && gMC.x > (npc->x - 0x3000) && gMC.x < (npc->x + 0x3000))
 			{
-				gMC.airborne = FALSE;
+				gMC.airborne = false;
 				gMC.y = npc->y - 0x3400;
 				if (gMC.ym > 0)
 					gMC.ym = 0;
 				gMC.flag |= 8;
-				touch = TRUE;
+				touch = true;
 			}
 		}
 		
 		if (touch && gMC.no_event == 0)
 		{
-			static BYTE npc_damage[] = { 1, 0, 2, 4, 4, 2, 0, 0 };
-			static BYTE npc_defense[] = { 1, 4, 2, 9, 3, 2, 0, 0 };
-			static BYTE npc_exp[] = {1, 0, 3, 0, 0, 3, 0, 0 };
+			static unsigned char npc_damage[] = { 1, 0, 2, 4, 4, 2, 0, 0 };
+			static unsigned char npc_defense[] = { 1, 4, 2, 9, 3, 2, 0, 0 };
+			static unsigned char npc_exp[] = {1, 0, 3, 0, 0, 3, 0, 0 };
 			
 			switch (npc->type)
 			{
@@ -801,7 +802,7 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 							if (exp_i != 0xFFFFFF )
 							{
 								CARET_SPAWNER *caretsp = &caret_spawner[exp_i];
-								caretsp->cond = TRUE;
+								caretsp->cond = true;
 								caretsp->type = 2;
 								caretsp->ani_no = npc_exp[npc->code_char] + 10;
 								caretsp->num = 1;
@@ -812,12 +813,12 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 							}
 							
 							//Destroy the NPC
-							npc->cond = FALSE;
+							npc->cond = false;
 							int dead_i = FindCaretSpawner(caret_spawner);
 							if (dead_i != 0xFFFFFF )
 							{
 								CARET_SPAWNER *caretsp = &caret_spawner[dead_i];
-								caretsp->cond = TRUE;
+								caretsp->cond = true;
 								caretsp->type = 0;
 								caretsp->ani_no = 0;
 								caretsp->num = 6;
@@ -852,15 +853,15 @@ void HitMyCharNpChar(NPCHAR *npc, EVENT_SCR *event_scr, CARET_SPAWNER *caret_spa
 }
 
 //Reload NPCs
-BOOL ReloadNpChar(NPCHAR *npc)
+bool ReloadNpChar(NPCHAR *npc)
 {
 	//Open NPChar.dat
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, "NPChar.dat");
 	
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read NPC data
 	for (int i = 0; i < MAX_NPCS; i++)
@@ -889,5 +890,5 @@ BOOL ReloadNpChar(NPCHAR *npc)
 		if (event.type == 2)
 			memcpy(&npc[i], &event, sizeof(NPCHAR));
 	}
-	return TRUE;
+	return true;
 }

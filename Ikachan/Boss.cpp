@@ -7,7 +7,7 @@ BOSS gBoss = { 0 };
 
 void InitBoss()
 {
-	gBoss.cond = TRUE;
+	gBoss.cond = true;
 	gBoss.life = 15;
 	gBoss.shock = 0;
 	gBoss.x6 = 0;
@@ -126,7 +126,7 @@ void ActBoss(CARET_SPAWNER *caret_spawner)
 				if (bubble_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[bubble_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 1;
 					caretsp->ani_no = 0;
 					caretsp->num = 5;
@@ -148,7 +148,7 @@ void ActBoss(CARET_SPAWNER *caret_spawner)
 				if (bubble_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[bubble_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 1;
 					caretsp->ani_no = 0;
 					caretsp->num = 5;
@@ -263,7 +263,7 @@ void ActBoss(CARET_SPAWNER *caret_spawner)
 				if (star_i != NO_CARET)
 				{
 					CARET_SPAWNER *caretsp = &caret_spawner[star_i];
-					caretsp->cond = TRUE;
+					caretsp->cond = true;
 					caretsp->type = 0;
 					caretsp->ani_no = 0;
 					caretsp->num = 1;
@@ -301,7 +301,7 @@ void DamageBoss(CARET_SPAWNER *caret_spawner, char damage)
 		if (dmg_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[dmg_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 2;
 			caretsp->ani_no = 10 - damage;
 			caretsp->num = 1;
@@ -319,9 +319,9 @@ void DamageBoss(CARET_SPAWNER *caret_spawner, char damage)
 void HitMyCharBoss(EVENT_SCR *event_scr, CARET_SPAWNER *caret_spawner)
 {
 	char flag = 0;
-	char touch = FALSE; //???
+	char touch = false; //???
 	
-	if (gBoss.cond == FALSE)
+	if (gBoss.cond == false)
 		return;
 	
 	//Check if Ikachan is touching Iron Head
@@ -333,7 +333,7 @@ void HitMyCharBoss(EVENT_SCR *event_scr, CARET_SPAWNER *caret_spawner)
 		gMC.x = gBoss.x + gBoss.hit.right;
 		gMC.xm = 0;
 		flag |= 1;
-		touch = TRUE;
+		touch = true;
 	}
 	if (gMC.y < (gBoss.y + gBoss.hit.bottom) &&
 		gMC.y > (gBoss.y + gBoss.hit.bottom - 0x1400) &&
@@ -345,7 +345,7 @@ void HitMyCharBoss(EVENT_SCR *event_scr, CARET_SPAWNER *caret_spawner)
 		gMC.y = gBoss.y + gBoss.hit.bottom;
 		gMC.ym = 0;
 		flag |= 2;
-		touch = TRUE;
+		touch = true;
 	}
 	if ((gMC.x + 0x4000) > (gBoss.x + gBoss.hit.left) &&
 		(gMC.x + 0x4000) < (gBoss.x + gBoss.hit.left + 0x1400) &&
@@ -355,19 +355,19 @@ void HitMyCharBoss(EVENT_SCR *event_scr, CARET_SPAWNER *caret_spawner)
 		gMC.x = gBoss.x + gBoss.hit.left - 0x4000;
 		gMC.xm = 0;
 		flag |= 4;
-		touch = TRUE;
+		touch = true;
 	}
 	if ((gMC.y + 0x4000) > (gBoss.y + gBoss.hit.top) &&
 		(gMC.y + 0x4000) < (gBoss.y + gBoss.hit.top + 0x1400) &&
 		gMC.x < (gBoss.x + gBoss.hit.right - 0x1000) &&
 		(gMC.x + 0x4000) > (gBoss.x + gBoss.hit.left + 0x1000))
 	{
-		gMC.airborne = FALSE;
+		gMC.airborne = false;
 		gMC.y = gBoss.y + gBoss.hit.top - 0x4000;
 		if (gMC.ym > 0)
 			gMC.ym = 0;
 		flag |= 8;
-		touch = TRUE;
+		touch = true;
 	}
 	
 	if (touch)

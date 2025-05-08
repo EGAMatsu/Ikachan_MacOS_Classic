@@ -1,10 +1,10 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
 
 #define FLAG_BYTES (32)
-extern BYTE gFlagNPC[FLAG_BYTES];
+extern unsigned char gFlagNPC[FLAG_BYTES];
 
 void InitFlags();
-BOOL SetNPCFlag(LONG a);
-BOOL CutNPCFlag(LONG a);
-BOOL GetNPCFlag(LONG a);
+bool SetNPCFlag(long a);
+bool CutNPCFlag(long a);
+bool GetNPCFlag(long a);

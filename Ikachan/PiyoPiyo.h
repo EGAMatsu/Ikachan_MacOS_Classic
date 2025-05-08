@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
 
 struct PIYOPIYO_CONTROL
 {
@@ -10,7 +10,7 @@ struct PIYOPIYO_CONTROL
 	short volume; //x4
 };
 
-BOOL InitPiyoPiyo();
+bool InitPiyoPiyo();
 void EndPiyoPiyo();
 void PiyoPiyoProc();
 void PiyoPiyoControl(PIYOPIYO_CONTROL *piyocont);

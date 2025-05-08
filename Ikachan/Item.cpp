@@ -4,19 +4,24 @@
 #include "EventScript.h"
 #include "Sound.h"
 #include "System.h"
+#include <stdio.h>
 #include <string.h>
 
-BYTE item_equip[12] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x02, 0x00, 0x00, 0x08 };
+unsigned char item_equip[12] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x02, 0x00, 0x00, 0x08 };
 
 //Item inventory initialization and inventory drawing
 void InitItem(ITEMS *items)
 {
+#if 0
 	//Allocate items
 	items->code = (char*)LocalAlloc(LPTR, MAX_ITEMS * sizeof(char));
 
 	//Reset item codes
 	for (int i = 0; i < MAX_ITEMS; i++)
 		items->code[i] = 0;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+#endif
 }
 
 void PutItem(ITEMS *items)
@@ -71,21 +76,21 @@ void MoveItem(ITEMS *items, EVENT_SCR *event_scr)
 }
 
 //Check, give, and remove items
-BOOL CheckItem(ITEMS *items, char code)
+bool CheckItem(ITEMS *items, char code)
 {
 	for (int i = 0; i < MAX_ITEMS; i++)
 	{
 		//Check if this is the requested item
 		if (items->code[i] == code)
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }
 
-BOOL AddItemData(ITEMS *items, char code)
+bool AddItemData(ITEMS *items, char code)
 {
 	//Check if we already have this item
-	if (CheckItem(items, code) == FALSE)
+	if (CheckItem(items, code) == false)
 	{
 		for (int i = 0; i < MAX_ITEMS; i++)
 		{
@@ -95,17 +100,17 @@ BOOL AddItemData(ITEMS *items, char code)
 				//Fill item slot and equip
 				items->code[i] = code;
 				gMC.equip |= item_equip[code];
-				return TRUE;
+				return true;
 			}
 		}
 	}
-	return FALSE;
+	return false;
 }
 
-BOOL SubItemData(ITEMS *items, char code)
+bool SubItemData(ITEMS *items, char code)
 {
 	//Check if we already have this item
-	if (CheckItem(items, code) == TRUE)
+	if (CheckItem(items, code) == true)
 	{
 		for (int i = 0; i < MAX_ITEMS; i++)
 		{
@@ -115,9 +120,9 @@ BOOL SubItemData(ITEMS *items, char code)
 				//Remove item from inventory and dequip
 				items->code[i] = 0;
 				gMC.equip &= ~item_equip[code];
-				return TRUE;
+				return true;
 			}
 		}
 	}
-	return FALSE;
+	return false;
 }

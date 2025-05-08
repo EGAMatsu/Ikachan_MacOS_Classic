@@ -1,5 +1,5 @@
 #include "Draw.h"
-#include <ddraw.h>
+//#include <ddraw.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -8,20 +8,20 @@ RECT grcFull = { 0, 0, SURFACE_WIDTH, SURFACE_HEIGHT };
 
 //Draw state
 int mag;
-BOOL fullscreen;
+bool fullscreen;
 
 //DirectDraw objects
-LPDIRECTDRAW lpDD;
-LPDIRECTDRAWSURFACE frontbuffer;
-LPDIRECTDRAWSURFACE backbuffer;
-LPDIRECTDRAWCLIPPER clipper;
+// LPDIRECTDRAW lpDD;
+// LPDIRECTDRAWSURFACE frontbuffer;
+// LPDIRECTDRAWSURFACE backbuffer;
+// LPDIRECTDRAWCLIPPER clipper;
 
 //Surfaces
 #define MAX_SURFACE 512
-LPDIRECTDRAWSURFACE surf[MAX_SURFACE] = {NULL};
+// LPDIRECTDRAWSURFACE surf[MAX_SURFACE] = {NULL};
 
 //Loaded font
-HFONT font;
+// HFONT font;
 
 //Window rect and size
 RECT backbuffer_rect;
@@ -38,16 +38,17 @@ void SetClientOffset(int width, int height)
 	client_y = height;
 }
 
+#if 0
 //End of frame function
-BOOL Flip_SystemTask(HWND hWnd)
+bool Flip_SystemTask(HWND hWnd)
 {
 	//Run system tasks while waiting for next frame
-	static DWORD timePrev;
+	static unsigned long timePrev;
 	while (GetTickCount() < (timePrev + 20))
 	{
 		Sleep(1);
 		if (!SystemTask())
-			return FALSE;
+			return false;
 	}
 
 	if ((timePrev + 100) < GetTickCount())
@@ -63,33 +64,33 @@ BOOL Flip_SystemTask(HWND hWnd)
 	dst_rect.right = dst_rect.left + scaled_window_width;
 	dst_rect.bottom = dst_rect.top + scaled_window_height;
 	frontbuffer->Blt(&dst_rect, backbuffer, &backbuffer_rect, DDBLT_WAIT, NULL);
-	return TRUE;
+	return true;
 }
 
 //DirectDraw interface
-BOOL StartDirectDraw(HWND hWnd, int wndSize)
+bool StartDirectDraw(HWND hWnd, int wndSize)
 {
 	//Create DirectDraw instance
 	if (DirectDrawCreate(NULL, &lpDD, NULL) != DD_OK)
-		return FALSE;
+		return false;
 
 	//Set cooperative level
 	switch (wndSize)
 	{
 		case WS_FULLSCREEN:
 			mag = 2;
-			fullscreen = TRUE;
+			fullscreen = true;
 			lpDD->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_EXCLUSIVE);
 			lpDD->SetDisplayMode(SURFACE_WIDTH * mag, SURFACE_HEIGHT * mag, 16);
 			break;
 		case WS_320x240:
 			mag = 1;
-			fullscreen = FALSE;
+			fullscreen = false;
 			lpDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
 			break;
 		case WS_640x480:
 			mag = 2;
-			fullscreen = FALSE;
+			fullscreen = false;
 			lpDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
 			break;
 	}
@@ -114,7 +115,7 @@ BOOL StartDirectDraw(HWND hWnd, int wndSize)
 	ddsd.dwBackBufferCount = 0;
 
 	if (lpDD->CreateSurface(&ddsd, &frontbuffer, NULL) != DD_OK)
-		return FALSE;
+		return false;
 
 	//Backbuffer
 	memset(&ddsd, 0, sizeof(DDSURFACEDESC));
@@ -125,13 +126,13 @@ BOOL StartDirectDraw(HWND hWnd, int wndSize)
 	ddsd.dwHeight = SURFACE_HEIGHT * mag;
 
 	if (lpDD->CreateSurface(&ddsd, &backbuffer, NULL) != DD_OK)
-		return FALSE;
+		return false;
 
 	//Create clipper
 	lpDD->CreateClipper(0, &clipper, NULL);
 	clipper->SetHWnd(0, hWnd);
 	frontbuffer->SetClipper(clipper);
-	return TRUE;
+	return true;
 }
 
 void EndDirectDraw(HWND hWnd)
@@ -158,24 +159,26 @@ void EndDirectDraw(HWND hWnd)
 	if (lpDD != NULL)
 		lpDD->Release();
 }
+#endif
 
 //Surface creation
-BOOL MakeSurface_File(LPCTSTR name, int surf_no) //TODO: ASM accuracy
+bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 {
+#if 0
 	//Get path
 	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, name);
 	
 	//Make sure a surface can be made here
 	if (surf_no > MAX_SURFACE)
-		return FALSE;
+		return false;
 	if (surf[surf_no] != NULL)
-		return FALSE;
+		return false;
 	
 	//Load image
 	HANDLE handle = LoadImage(GetModuleHandle(NULL), path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 	if (handle == NULL)
-		return FALSE;
+		return false;
 
 	BITMAP bitmap;
 	GetObjectA(handle, sizeof(BITMAP), &bitmap);
@@ -220,16 +223,16 @@ BOOL MakeSurface_File(LPCTSTR name, int surf_no) //TODO: ASM accuracy
 
 	//Release image handle
 	DeleteObject(handle);
-	return TRUE;
+	return true;
 }
 
-BOOL MakeSurface_Generic(int bxsize, int bysize, int surf_no)
+bool MakeSurface_Generic(int bxsize, int bysize, int surf_no)
 {
 	//Make sure a surface can be made here
 	if (surf_no > MAX_SURFACE)
-		return FALSE;
+		return false;
 	if (surf[surf_no] != NULL)
-		return FALSE;
+		return false;
 
 	//Create surface
 	DDSURFACEDESC ddsd;
@@ -246,12 +249,16 @@ BOOL MakeSurface_Generic(int bxsize, int bysize, int surf_no)
 	ddcolorkey.dwColorSpaceLowValue = 0;
 	ddcolorkey.dwColorSpaceHighValue = 0;
 	surf[surf_no]->SetColorKey(DDCKEY_SRCBLT, &ddcolorkey);
-	return TRUE;
+	return true;
+#else
+	return false;
+#endif
 }
 
 //Backbuffer backup
 void BackupSurface(int surf_no, const RECT *rect)
 {
+#if 0
 	//Construct rect descriptor
 	DDBLTFX ddbltfx;
 	memset(&ddbltfx, 0, sizeof(DDBLTFX));
@@ -266,6 +273,7 @@ void BackupSurface(int surf_no, const RECT *rect)
 	
 	//Blit backbuffer to destination surface
 	surf[surf_no]->Blt(&rcSet, backbuffer, &rcSet, DDBLT_WAIT, &ddbltfx);
+#endif
 }
 
 //Bitmap
@@ -306,13 +314,14 @@ void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no)
 	rcSet.right *= mag;
 	rcSet.bottom *= mag;
 
-	//Blit surface
-	backbuffer->Blt(&rcSet, surf[surf_no], &rcWork, DDBLT_KEYSRC | DDBLT_WAIT, NULL);
+	//Blit surface (TODO)
+	// backbuffer->Blt(&rcSet, surf[surf_no], &rcWork, DDBLT_KEYSRC | DDBLT_WAIT, NULL);
 }
 
-//Cort box
-void CortBox(const RECT *rect, DWORD col)
+//Cort box (TODO)
+void CortBox(const RECT *rect, unsigned long col)
 {
+#if 0
 	//Construct rect descriptor
 	static DDBLTFX ddbltfx;
 	memset(&ddbltfx, 0, sizeof(DDBLTFX));
@@ -327,10 +336,13 @@ void CortBox(const RECT *rect, DWORD col)
 
 	//Blit rect
 	backbuffer->Blt(&rcSet, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+#endif
 }
 
-void CortBox2(const RECT *rect, DWORD col, int surf_no)
+// TODO
+void CortBox2(const RECT *rect, unsigned long col, int surf_no)
 {
+#if 0
 	//Construct rect descriptor
 	static DDBLTFX ddbltfx;
 	memset(&ddbltfx, 0, sizeof(DDBLTFX));
@@ -345,11 +357,13 @@ void CortBox2(const RECT *rect, DWORD col, int surf_no)
 
 	//Blit rect
 	surf[surf_no]->Blt(&rcSet, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+#endif
 }
 
-//Text
-void InitTextObject(LPCTSTR name)
+//Text (TODO)
+void InitTextObject(const char* name)
 {
+#if 0
 	//Get font width and height
 	unsigned int width, height;
 	switch (mag)
@@ -365,11 +379,13 @@ void InitTextObject(LPCTSTR name)
 	}
 
 	//Create font object
-	font = CreateFont(height, width, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_DONTCARE, name);
+	font = CreateFont(height, width, 0, 0, FW_NORMAL, false, false, false, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_DONTCARE, name);
+#endif
 }
 
-void PutText(int x, int y, LPCTSTR text, DWORD color, BOOL unk)
+void PutText(int x, int y, const char* text, unsigned long color, bool unk) // TODO
 {
+#if 0
 	//Lock backbuffer
 	HDC hdc;
 	backbuffer->GetDC(&hdc);
@@ -383,10 +399,12 @@ void PutText(int x, int y, LPCTSTR text, DWORD color, BOOL unk)
 
 	//Unlock backbuffer
 	backbuffer->ReleaseDC(hdc);
+#endif
 }
 
-void PutText2(int x, int y, LPCTSTR text, DWORD color, int surf_no, BOOL unk)
+void PutText2(int x, int y, const char* text, unsigned long color, int surf_no, bool unk)
 {
+#if 0
 	//Lock surface
 	HDC hdc;
 	surf[surf_no]->GetDC(&hdc);
@@ -400,9 +418,10 @@ void PutText2(int x, int y, LPCTSTR text, DWORD color, int surf_no, BOOL unk)
 
 	//Unlock surface
 	surf[surf_no]->ReleaseDC(hdc);
+#endif
 }
 
 void EndTextObject()
 {
-	DeleteObject(font);
+	// DeleteObject(font);
 }

@@ -5,25 +5,31 @@
 #include "Sound.h"
 #include <stdio.h>
 
-BOOLEAN gEditorMode;
+bool gEditorMode;
 short gEditorNPC;
+// TODO what's the POINT type?
+#if 0
 POINT gEditorCursor_Track;
 POINT gEditorCursor_WorldPos;
 POINT gEditorCursor_ScreenPos;
 POINT gEditorCursor_Tile;
 POINT gEditorCursor_NPC;
+#endif
 
 void InitEditor()
 {
+#if 0
 	gEditorCursor_Track.x = (SURFACE_WIDTH / 2) - 16;
 	gEditorCursor_Track.y = (SURFACE_HEIGHT / 2) - 16;
 	SetCursorPos((SURFACE_WIDTH / 2) - 16, (SURFACE_HEIGHT / 2) - 16);
 	gEditorCursor_ScreenPos.x = (SURFACE_WIDTH / 2) - 16;
 	gEditorCursor_ScreenPos.y = (SURFACE_HEIGHT / 2) - 16;
+#endif
 }
 
 void PutEditorCursor()
 {
+#if 0
 	//Get cursor's position
 	POINT cur_pos;
 	GetCursorPos(&cur_pos);
@@ -37,10 +43,12 @@ void PutEditorCursor()
 	//Draw cursor
 	static RECT rcCursor = { 0, 0, 32, 32 };
 	PutBitmap3(&grcFull, gEditorCursor_ScreenPos.x, gEditorCursor_ScreenPos.y, &rcCursor, SURFACE_ID_CURSOR);
+#endif
 }
 
 void PutEditorSelect(NPCHAR *npc, FRAME *frame)
 {
+#if 0
 	//Get cursor positions
 	gEditorCursor_WorldPos.x = gEditorCursor_ScreenPos.x + (frame->x / 0x400);
 	gEditorCursor_WorldPos.y = gEditorCursor_ScreenPos.y + (frame->y / 0x400);
@@ -92,13 +100,15 @@ void PutEditorSelect(NPCHAR *npc, FRAME *frame)
 		           (npc[gEditorNPC].tgt_y / 0x400) - (frame->y / 0x400) - 8,
 		           (npc[gEditorNPC].tgt_y / 0x400) / 16);
 	}
+#endif
 }
 
 void EditorProc(NPCHAR *npc)
 {
+#if 0
 	switch (gEditorMode)
 	{
-		case FALSE:
+		case false:
 			if (gMouseTrg2 & MOUSE_LEFT)
 			{
 				if (gEditorCursor_ScreenPos.x <= 8 ||
@@ -111,7 +121,7 @@ void EditorProc(NPCHAR *npc)
 					gEditorMode = 1;
 					gEditorCursor_NPC.x = gEditorCursor_Tile.x;
 					gEditorCursor_NPC.y = gEditorCursor_Tile.y;
-					npc[gEditorNPC].cond = TRUE;
+					npc[gEditorNPC].cond = true;
 					npc[gEditorNPC].x = gEditorCursor_NPC.x << 14;
 					npc[gEditorNPC].y = gEditorCursor_NPC.y << 14;
 				}
@@ -180,7 +190,7 @@ void EditorProc(NPCHAR *npc)
 						{
 							//Delete NPC
 							PlaySoundObject(SOUND_ID_OUCH, SOUND_MODE_PLAY);
-							npc[i].cond = FALSE;
+							npc[i].cond = false;
 						}
 					}
 				}
@@ -236,7 +246,7 @@ void EditorProc(NPCHAR *npc)
 				}
 			}
 			break;
-		case TRUE:
+		case true:
 			//Drag target
 			npc[gEditorNPC].tgt_x = gEditorCursor_Tile.x << 14;
 			npc[gEditorNPC].tgt_y = gEditorCursor_Tile.y << 14;
@@ -247,6 +257,7 @@ void EditorProc(NPCHAR *npc)
 			}
 			break;
 	}
+#endif
 }
 
 void PutEditorNpcInfo(NPCHAR *npc)
@@ -276,15 +287,15 @@ void PutEditorNpcInfo(NPCHAR *npc)
 	PutBitmap3(&grcFull, 192, 16, &rcNpcType[npc[gEditorNPC].type], SURFACE_ID_NPCTYPE);
 }
 
-BOOL LoadNpChar(NPCHAR *npc)
+bool LoadNpChar(NPCHAR *npc)
 {
 	//Open NPChar.dat
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, "NPChar.dat");
 	
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read NPC data
 	for (int i = 0; i < MAX_NPCS; i++)
@@ -299,18 +310,18 @@ BOOL LoadNpChar(NPCHAR *npc)
 		fread(&npc[i].tgt_x, 4, 1, fp);
 		fread(&npc[i].tgt_y, 4, 1, fp);
 	}
-	return TRUE;
+	return true;
 }
 
-BOOL SaveNpChar(NPCHAR *npc)
+bool SaveNpChar(NPCHAR *npc)
 {
 	//Open NPChar.dat
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, "NPChar.dat");
 	
 	FILE *fp = fopen(path, "wb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read NPC data
 	for (int i = 0; i < MAX_NPCS; i++)
@@ -325,5 +336,5 @@ BOOL SaveNpChar(NPCHAR *npc)
 		fwrite(&npc[i].tgt_x, 4, 1, fp);
 		fwrite(&npc[i].tgt_y, 4, 1, fp);
 	}
-	return TRUE;
+	return true;
 }

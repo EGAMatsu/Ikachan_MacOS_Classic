@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
 
 #define MAX_CARETS (120)
 #define MAX_CARET_SPAWNERS (10)
@@ -8,21 +8,21 @@
 
 struct CARET
 {
-  BOOLEAN cond;
-  BYTE type;
+  bool cond;
+  unsigned char type;
   int x;
   int y;
   int xm;
   int ym;
   char ani_no;
-  WORD x16;
+  unsigned short x16;
   int ani_wait;
 };
 
 struct CARET_SPAWNER
 {
-	BOOLEAN cond;
-	BYTE type;
+	bool cond;
+	unsigned char type;
 	char ani_no;
 	char num;
 	int x;

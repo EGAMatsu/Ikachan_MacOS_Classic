@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
 
 //Keys
 #define MOUSE_RIGHT (0x00000001)
@@ -14,23 +14,27 @@
 #define KEY_Z     (0x00000040)
 #define KEY_S     (0x00000080)
 
-extern DWORD gKey, gKeyTrg;
-extern DWORD gMouse, gMouseTrg, gMouseTrg2;
+extern unsigned long gKey, gKeyTrg;
+extern unsigned long gMouse, gMouseTrg, gMouseTrg2;
 
 //Window size
 enum WND_SIZE
 {
 	WS_FULLSCREEN,
 	WS_320x240,
-	WS_640x480,
+	WS_640x480
 };
 extern WND_SIZE gWndSize;
 
 //Windows objects
-extern HWND ghWnd;
+//extern HWND ghWnd;
 
 //Filepath
-extern TCHAR gModulePath[MAX_PATH];
+#ifndef MAX_PATH
+#define MAX_PATH 260
+#endif
+
+extern char gModulePath[MAX_PATH];
 
 int Random(int min, int max);
-BOOL SystemTask();
+bool SystemTask();

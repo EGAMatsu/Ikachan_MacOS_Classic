@@ -4,17 +4,18 @@
 #include "Boss.h"
 #include <stdio.h>
 
-BOOL LoadMapData(LPCTSTR path, MAP *map)
+bool LoadMapData(const char* path, MAP *map)
 {
+#if 0
 	//Open file
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read file
 	BITMAPFILEHEADER bitmap_file_header;
 	BITMAPINFOHEADER bitmap_info_header;
-	DWORD bitmap_pal_data[0x100];
+	unsigned long bitmap_pal_data[0x100];
 
 	fread(&bitmap_file_header, sizeof(BITMAPFILEHEADER), 1, fp);
 	fread(&bitmap_info_header, sizeof(BITMAPINFOHEADER), 1, fp);
@@ -22,17 +23,17 @@ BOOL LoadMapData(LPCTSTR path, MAP *map)
 
 	//Verify file
 	if (bitmap_file_header.bfType != 0x4D42) //'BM' little endian
-		return FALSE;
+		return false;
 	if (bitmap_info_header.biBitCount != 8) //8bpp
-		return FALSE;
+		return false;
 
 	//Get width and height and allocate buffer
 	map->width = bitmap_info_header.biWidth;
 	map->length = bitmap_info_header.biHeight;
-	BYTE *final_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
+	unsigned char *final_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
 	
 	//Read data from file
-	BYTE *pre_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
+	unsigned char *pre_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
 	fread(pre_buf, 1, bitmap_info_header.biWidth * bitmap_info_header.biHeight, fp);
 	fclose(fp);
 	
@@ -49,7 +50,11 @@ BOOL LoadMapData(LPCTSTR path, MAP *map)
 
 	//Use data
 	map->data = final_buf;
-	return TRUE;
+	return true;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	return false;
+#endif
 }
 
 //Background drawing
@@ -95,7 +100,7 @@ void PutMapBack(MAP *map, int fx, int fy)
 		for (int x = (fx / 0x400) / 16; x < ((fx / 0x400) / 16 + MAP_WIDTH); x++)
 		{
 			//Check if this is a back tile
-			BYTE tile = map->data[x + map->width * y];
+			unsigned char tile = map->data[x + map->width * y];
 			if (tile != 0 && (
 				(tile >> 5) == 0 ||
 				(tile >> 5) == 2 ||
@@ -123,7 +128,7 @@ void PutMapFront(MAP *map, int fx, int fy)
 		for (int x = (fx / 0x400) / 16; x < ((fx / 0x400) / 16 + MAP_WIDTH); x++)
 		{
 			//Check if this is a front tile
-			BYTE tile = map->data[x + map->width * y];
+			unsigned char tile = map->data[x + map->width * y];
 			if (tile != 0 && (tile >> 5) == 1)
 			{
 				//Draw tile
@@ -176,7 +181,7 @@ void PutMapVector(MAP *map, int fx, int fy)
 	{
 		for (int x = (fx / 0x400) / 16; x < ((fx / 0x400) / 16 + MAP_WIDTH); x++)
 		{
-			BYTE tile = map->data[x + map->width * y];
+			unsigned char tile = map->data[x + map->width * y];
 			if (tile != 0 && (tile >> 5) == 3)
 			{
 				PutBitmap3(&grcFull,

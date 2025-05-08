@@ -1,14 +1,14 @@
 #pragma once
 #include "Map.h"
 #include "Effect.h"
-#include <windows.h>
+//#include <windows.h>
 
 struct MYCHAR
 {
-	BOOLEAN cond; //x0 x420DD8
-	BOOLEAN dead; //x1 x420DD9
-	BYTE unit; //x2 x420DDA
-	BYTE equip; //x3 x420DDB
+	bool cond; //x0 x420DD8
+	bool dead; //x1 x420DD9
+	unsigned char unit; //x2 x420DDA
+	unsigned char equip; //x3 x420DDB
 	int x; //x4 x420DDC
 	int y; //x8 x420DE0
 	int xm; //xC x420DE4
@@ -24,9 +24,9 @@ struct MYCHAR
 	//alignment x21
 	short swim_wait; //x22 x420DFA
 	short dash_wait; //x24 x420DFC
-	BYTE direct; //x26 x420DFE
-	BOOLEAN airborne; //x27 x420DFF
-	BYTE flag; //x28 x420EE0
+	unsigned char direct; //x26 x420DFE
+	bool airborne; //x27 x420DFF
+	unsigned char flag; //x28 x420EE0
 	char carry; //x29 x420EE1
 };
 

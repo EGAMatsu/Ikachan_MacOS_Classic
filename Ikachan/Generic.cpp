@@ -3,6 +3,7 @@
 #include "Sound.h"
 #include "PixelScript.h"
 #include <stdio.h>
+#include <string.h>
 
 void GetCompileDate(int *year, int *month, int *day)
 {
@@ -34,18 +35,19 @@ void GetCompileDate(int *year, int *month, int *day)
 	*month = i;
 }
 
-BOOL GetCompileVersion(int *v1, int *v2, int *v3, int *v4)
+bool GetCompileVersion(int *v1, int *v2, int *v3, int *v4)
 {
+#if 0
 	unsigned int puLen;
 	VS_FIXEDFILEINFO *lpBuffer;
-	DWORD dwHandle;
-	DWORD dwLen;
+	unsigned long dwHandle;
+	unsigned long dwLen;
 	char path[MAX_PATH];
 	LPVOID lpData;
-	BOOL bResult;
+	bool bResult;
 
 	lpData = NULL;
-	bResult = FALSE;
+	bResult = false;
 
 	GetModuleFileName(NULL, path, sizeof(path));
 	dwLen = GetFileVersionInfoSize(path, &dwHandle);
@@ -68,7 +70,7 @@ BOOL GetCompileVersion(int *v1, int *v2, int *v3, int *v4)
 	*v2 = (unsigned short)(lpBuffer->dwFileVersionMS & 0xFFFF);
 	*v3 = (unsigned short)(lpBuffer->dwFileVersionLS >> 16);
 	*v4 = (unsigned short)(lpBuffer->dwFileVersionLS & 0xFFFF);
-	bResult = TRUE;
+	bResult = true;
 
 fail:
 
@@ -76,9 +78,14 @@ fail:
 		free(lpData);
 
 	return bResult;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	return false;
+#endif
 }
 
-BOOL OpenSoundVolume(HWND hWnd)
+#if 0
+bool OpenSoundVolume(HWND hWnd)
 {
 	//Get system directory...
 	char path[MAX_PATH];
@@ -103,10 +110,11 @@ BOOL OpenSoundVolume(HWND hWnd)
 	INT_PTR error2 = (INT_PTR)ShellExecute(hWnd, "open", path3, NULL, NULL, SW_SHOW);
 
 	if (error1 <= 32 && error2 <= 32)
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
+#endif
 
 void LoadGenericData()
 {

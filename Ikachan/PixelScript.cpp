@@ -9,31 +9,36 @@ RECT rcPsIllust = { 0, 0, 320, 240 };
 RECT rcPsEnd = { 0, 0, 48, 24 };
 RECT rcPsLine = { 0, 0, SURFACE_WIDTH, 16 };
 
-BOOL ReadPixelScript(PIX_SCR *ptx, LPCTSTR path)
+bool ReadPixelScript(PIX_SCR *ptx, const char* path)
 {
+#if 0
 	//Get filesize
 	HANDLE hFile = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ptx->size = GetFileSize(hFile, NULL);
 	CloseHandle(hFile);
 	
 	//Allocate data
-	ptx->data = (LPSTR)LocalAlloc(LPTR, ptx->size + 1);
+	ptx->data = (char*)LocalAlloc(LPTR, ptx->size + 1);
 	
 	//Open file
 	FILE *fp = fopen(path, "rt");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 	
 	//Read file
 	fread(ptx->data, ptx->size, 1, fp);
 	fclose(fp);
-	return TRUE;
+	return true;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	return false;
+#endif
 }
 
-void LoadPixelScript(PIX_SCR *ptx, LPCTSTR path, char scale)
+void LoadPixelScript(PIX_SCR *ptx, const char* path, char scale)
 {
 	//Initialize Pixel Script
-	ptx->end = FALSE;
+	ptx->end = false;
 	ptx->p_read = 0;
 	ptx->scale = scale;
 	ptx->line = 0;
@@ -48,9 +53,9 @@ void LoadPixelScript(PIX_SCR *ptx, LPCTSTR path, char scale)
 	DebugPutText(ptx->data);
 }
 
-int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, BOOL ending)
+int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, bool ending)
 {
-	TCHAR c[44];
+	char c[44];
 	
 	//Draw illustration
 	if (ending)
@@ -110,7 +115,7 @@ int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, BOOL ending)
 					else if (IS_COMMAND1('s'))
 					{
 						//Bring up "END" text
-						ptx->end = TRUE;
+						ptx->end = true;
 					}
 					else if (ptx->data[ptx->p_read] >= 'A' && ptx->data[ptx->p_read] <= 'z')
 					{
@@ -136,8 +141,8 @@ int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, BOOL ending)
 					{
 						//Print text onto line
 						c[j] = 0;
-						PutText2(8, 1, c, 0xFF0000, SURFACE_ID_WORDS0 + ptx->line, FALSE);
-						PutText2(8, 0, c, 0xFF8800, SURFACE_ID_WORDS0 + ptx->line, FALSE);
+						PutText2(8, 1, c, 0xFF0000, SURFACE_ID_WORDS0 + ptx->line, false);
+						PutText2(8, 0, c, 0xFF8800, SURFACE_ID_WORDS0 + ptx->line, false);
 						if (++ptx->line > (MAX_PSLINES - 1))
 							ptx->line = 0;
 						ptx->p_read += 2;
@@ -161,5 +166,6 @@ int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, BOOL ending)
 void EndPixelScript(PIX_SCR *ptx)
 {
 	//Release data
-	LocalFree((HLOCAL)ptx->data);
+	// LocalFree((HLOCAL)ptx->data);
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }

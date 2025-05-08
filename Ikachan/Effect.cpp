@@ -9,7 +9,7 @@ int FindCaret(CARET *caret)
 	//Return index of first free caret or 0xFFFFFF
 	for (int i = 0; i < MAX_CARETS; i++, caret++)
 	{
-		if (caret->cond == FALSE)
+		if (caret->cond == false)
 			return i;
 	}
 	return NO_CARET;
@@ -49,14 +49,14 @@ void ProcCaret00(CARET *caret, MAP *map, FRAME *frame)
 	
 	//Delete if out of bounds
 	if (caret->x > (map->width << 14) || caret->x < 0 || caret->y > (map->length << 14) || caret->y < 0)
-		caret->cond = FALSE;
+		caret->cond = false;
 	
 	//Animate
 	if (++caret->ani_wait > 8)
 	{
 		caret->ani_wait = 0;
 		if (++caret->ani_no > 5)
-			caret->cond = FALSE;
+			caret->cond = false;
 	}
 	
 	//Draw
@@ -77,14 +77,14 @@ void ProcCaret01(CARET *caret, MAP *map, FRAME *frame)
 	
 	//Delete if out of bounds
 	if (caret->x > (map->width << 14) || caret->x < 0 || caret->y > (map->length << 14) || caret->y < 0)
-		caret->cond = FALSE;
+		caret->cond = false;
 	
 	//Animate
 	if (++caret->ani_wait > 32)
 	{
 		caret->ani_wait = 0;
 		if (++caret->ani_no > 5)
-			caret->cond = FALSE;
+			caret->cond = false;
 	}
 	
 	//Draw
@@ -103,11 +103,11 @@ void ProcCaret02(CARET *caret, MAP *map, FRAME *frame)
 	
 	//Delete if out of bounds
 	if (caret->x > (map->width << 14) || caret->x < 0 || caret->y > (map->length << 14) || caret->y < 0)
-		caret->cond = FALSE;
+		caret->cond = false;
 	
 	//Delete after 72 frames
 	if (++caret->ani_wait > 72)
-		caret->cond = FALSE;
+		caret->cond = false;
 	
 	//Draw
 	if (caret->cond)
@@ -130,14 +130,14 @@ void ProcCaret03(CARET *caret, MAP *map, FRAME *frame)
 	
 	//Delete if out of bounds
 	if (caret->x > (map->width << 14) || caret->x < 0 || caret->y > (map->length << 14) || caret->y < 0)
-		caret->cond = FALSE;
+		caret->cond = false;
 	
 	//Animate
 	if (++caret->ani_wait > 3)
 	{
 		caret->ani_wait = 0;
 		if (++caret->ani_no > 24)
-			caret->cond = FALSE;
+			caret->cond = false;
 	}
 	
 	//Draw
@@ -169,7 +169,7 @@ int FindCaretSpawner(CARET_SPAWNER *caret_spawner)
 	//Return index of first free caret spawner or 0xFFFFFF
 	for (int i = 0; i < MAX_CARETS; i++, caret_spawner++) //This should be MAX_CARET_SPAWNERS
 	{
-		if (caret_spawner->cond == FALSE)
+		if (caret_spawner->cond == false)
 			return i;
 	}
 	return NO_CARET;
@@ -181,7 +181,7 @@ void ProcCaretSpawner(CARET_SPAWNER *caret_spawner, CARET *caret)
 	{
 		if (caret_spawner->cond)
 		{
-			caret_spawner->cond = FALSE;
+			caret_spawner->cond = false;
 			for (int j = 0; j < caret_spawner->num; j++)
 			{
 				int caret_i = FindCaret(caret);
@@ -195,7 +195,7 @@ void ProcCaretSpawner(CARET_SPAWNER *caret_spawner, CARET *caret)
 					set_caret->y = caret_spawner->y + (Random(-caret_spawner->rand_y, caret_spawner->rand_y) << 10);
 					set_caret->xm = Random(caret_spawner->rand_moveleft, caret_spawner->rand_moveright);
 					set_caret->ym = Random(caret_spawner->rand_moveup, caret_spawner->rand_movedown);
-					set_caret->cond = TRUE;
+					set_caret->cond = true;
 				}
 			}
 		}

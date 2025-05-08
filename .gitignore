@@ -86,3 +86,6 @@ ipch/
 /Ikachan.depend
 /Ikachan.mpp
 /Ikachan/*.aps
+
+*.o
+ika

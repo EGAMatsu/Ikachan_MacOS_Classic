@@ -1,5 +1,6 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
+#include "FakeRect.h"
 #include "System.h"
 
 #define SURFACE_WIDTH  (320)
@@ -62,22 +63,22 @@ enum SURFACE_ID
 	SURFACE_ID_CARRY = 87,
 	SURFACE_ID_JUEL = 88,
 	SURFACE_ID_UFO = 89,
-	SURFACE_ID_IRONHEAD = 100,
+	SURFACE_ID_IRONHEAD = 100
 };
 
 extern RECT grcFull;
 
 void SetClientOffset(int width, int height);
-BOOL Flip_SystemTask(HWND hWnd);
-BOOL StartDirectDraw(HWND hWnd, int wndSize);
-void EndDirectDraw(HWND hWnd);
-BOOL MakeSurface_File(LPCTSTR name, int surf_no);
-BOOL MakeSurface_Generic(int bxsize, int bysize, int surf_no);
+//bool Flip_SystemTask(HWND hWnd);
+//bool StartDirectDraw(HWND hWnd, int wndSize);
+//void EndDirectDraw(HWND hWnd);
+bool MakeSurface_File(const char* name, int surf_no);
+bool MakeSurface_Generic(int bxsize, int bysize, int surf_no);
 void BackupSurface(int surf_no, const RECT *rect);
 void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no);
-void CortBox(const RECT *rect, DWORD col);
-void CortBox2(const RECT *rect, DWORD col, int surf_no);
-void InitTextObject(LPCTSTR name);
-void PutText(int x, int y, LPCTSTR text, DWORD color, BOOL unk);
-void PutText2(int x, int y, LPCTSTR text, DWORD color, int surf_no, BOOL unk);
+void CortBox(const RECT *rect, unsigned long col);
+void CortBox2(const RECT *rect, unsigned long col, int surf_no);
+void InitTextObject(const char* name);
+void PutText(int x, int y, const char* text, unsigned long color, bool unk);
+void PutText2(int x, int y, const char* text, unsigned long color, int surf_no, bool unk);
 void EndTextObject();

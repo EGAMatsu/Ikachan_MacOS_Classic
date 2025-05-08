@@ -1,6 +1,7 @@
 #pragma once
-#include <windows.h>
+//#include <windows.h>
+#include "FakeRect.h"
 
 extern RECT grcLoading;
 
-BOOL Game(HWND hWnd);
+bool Game(); // TODO hWnd

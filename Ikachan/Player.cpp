@@ -34,7 +34,7 @@ void DamageMyChar(CARET_SPAWNER *caret_spawner, char damage)
 		if (damage_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[damage_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 2;
 			caretsp->ani_no = 10 - damage;
 			caretsp->num = 1;
@@ -53,15 +53,15 @@ void DamageMyChar(CARET_SPAWNER *caret_spawner, char damage)
 		{
 			//Die
 			PlaySoundObject(SOUND_ID_DEAD, SOUND_MODE_PLAY);
-			gMC.cond = FALSE;
-			gMC.dead = TRUE;
+			gMC.cond = false;
+			gMC.dead = true;
 			
 			//Create death effect
 			int dead_i = FindCaretSpawner(caret_spawner);
 			if (dead_i != NO_CARET)
 			{
 				CARET_SPAWNER *caretsp = &caret_spawner[dead_i];
-				caretsp->cond = TRUE;
+				caretsp->cond = true;
 				caretsp->type = 0;
 				caretsp->ani_no = 0;
 				caretsp->num = 30;
@@ -78,7 +78,7 @@ void DamageMyChar(CARET_SPAWNER *caret_spawner, char damage)
 	}
 }
 
-BYTE JudgeHitMyCharBlock(int x, int y, char flag)
+unsigned char JudgeHitMyCharBlock(int x, int y, char flag)
 {
 	//Collide with block
 	if ((flag & 1) && (flag & 2))
@@ -133,7 +133,7 @@ BYTE JudgeHitMyCharBlock(int x, int y, char flag)
 		}
 		if ((gMC.y / 0x400) >= (y * 16 - 16) && (gMC.x / 0x400) < (x * 16 + 12))
 		{
-			gMC.airborne = FALSE;
+			gMC.airborne = false;
 			gMC.y = (y * 16 - 16) << 10;
 			if (gMC.ym > 0)
 				gMC.ym = 0;
@@ -153,7 +153,7 @@ BYTE JudgeHitMyCharBlock(int x, int y, char flag)
 		}
 		if ((gMC.y / 0x400) >= (y * 16 - 16) && (gMC.x / 0x400) > (x * 16 - 12))
 		{
-			gMC.airborne = FALSE;
+			gMC.airborne = false;
 			gMC.y = (y * 16 - 16) << 10;
 			if (gMC.ym > 0)
 				gMC.ym = 0;
@@ -163,7 +163,7 @@ BYTE JudgeHitMyCharBlock(int x, int y, char flag)
 	return gMC.flag;
 }
 
-BYTE JudgeHitMyCharSnack(int x, int y, BYTE flag, CARET_SPAWNER *caret_spawner, MAP *map)
+unsigned char JudgeHitMyCharSnack(int x, int y, unsigned char flag, CARET_SPAWNER *caret_spawner, MAP *map)
 {
 	//Reset collision flag for some reason
 	gMC.flag = 0;
@@ -218,7 +218,7 @@ BYTE JudgeHitMyCharSnack(int x, int y, BYTE flag, CARET_SPAWNER *caret_spawner, 
 		{
 			if (gMC.unit != 1)
 			{
-				gMC.airborne = FALSE;
+				gMC.airborne = false;
 				if (gMC.ym > 0)
 					gMC.ym = 0;
 			}
@@ -240,7 +240,7 @@ BYTE JudgeHitMyCharSnack(int x, int y, BYTE flag, CARET_SPAWNER *caret_spawner, 
 		{
 			if (gMC.unit != 1)
 			{
-				gMC.airborne = FALSE;
+				gMC.airborne = false;
 				if (gMC.ym > 0)
 					gMC.ym = 0;
 			}
@@ -261,7 +261,7 @@ BYTE JudgeHitMyCharSnack(int x, int y, BYTE flag, CARET_SPAWNER *caret_spawner, 
 		if (bubble_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[bubble_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 1;
 			caretsp->ani_no = 0;
 			caretsp->num = 5;
@@ -290,7 +290,7 @@ void JudgeHitMyCharDamage(int x, int y, CARET_SPAWNER *caret_spawner)
 	}
 }
 
-void JudgeHitMyCharVector(int x, int y, BYTE type)
+void JudgeHitMyCharVector(int x, int y, unsigned char type)
 {
 	if ((gMC.x / 0x400) < (x * 16 + 8) &&
 		(gMC.x / 0x400) >= (x * 16 - 8) &&
@@ -337,7 +337,7 @@ void JudgeHitMyCharItem(int x, int y, CARET_SPAWNER *caret_spawner, MAP *map)
 		if (exp_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[exp_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 2;
 			caretsp->ani_no = 11;
 			caretsp->num = 1;
@@ -352,7 +352,7 @@ void JudgeHitMyCharItem(int x, int y, CARET_SPAWNER *caret_spawner, MAP *map)
 		if (star_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[star_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 0;
 			caretsp->ani_no = 0;
 			caretsp->num = 4;
@@ -373,8 +373,8 @@ void HitMyCharMap(MAP *map, CARET_SPAWNER *caret_spawner)
 	//Collision offsets and flags
 	char offx[4];
 	char offy[4];
-	BOOLEAN flag1[4];
-	BYTE flag2[4];
+	bool flag1[4];
+	unsigned char flag2[4];
 	
 	offx[0] = 0;
 	offx[1] = 1;
@@ -446,7 +446,7 @@ void HitMyCharMap(MAP *map, CARET_SPAWNER *caret_spawner)
 		if (levup_i != NO_CARET)
 		{
 			CARET_SPAWNER *caretsp = &caret_spawner[levup_i];
-			caretsp->cond = TRUE;
+			caretsp->cond = true;
 			caretsp->type = 3;
 			caretsp->ani_no = 0;
 			caretsp->num = 1;
@@ -459,7 +459,7 @@ void HitMyCharMap(MAP *map, CARET_SPAWNER *caret_spawner)
 	
 	//Set airborne flag
 	if (v19 <= 0)
-		gMC.airborne = TRUE;
+		gMC.airborne = true;
 }
 
 //Draw MyChar
@@ -499,7 +499,7 @@ void PutMyChar(FRAME *frame)
 		{ 120, 80, 160, 120 },
 	};
 	
-	BYTE frame_no = (gMC.direct * 4) + gMC.ani_no;
+	unsigned char frame_no = (gMC.direct * 4) + gMC.ani_no;
 	if (gMC.equip & 8)
 		PutBitmap3(&grcFull, (gMC.x / 0x400) - (frame->x / 0x400) - 12, (gMC.y / 0x400) - (frame->y / 0x400) - 12, &rcMyCharShip[frame_no], SURFACE_ID_MYCHAR3);
 	else if (gMC.equip & 1)
@@ -547,7 +547,7 @@ void ActMyChar_Normal(CARET *caret, CARET_SPAWNER *caret_spawner)
 			caret->type = 1;
 			caret->xm = -swim_xm[gMC.direct];
 			caret->ym = -swim_ym[gMC.direct];
-			caret->cond = TRUE;
+			caret->cond = true;
 			caret->ani_no = 0;
 			caret->ani_wait = 0;
 			switch (gMC.direct)
@@ -602,7 +602,7 @@ void ActMyChar_Normal(CARET *caret, CARET_SPAWNER *caret_spawner)
 			caretp->type = 1;
 			caretp->xm = dash_xm[gMC.direct] / -8;
 			caretp->ym = dash_ym[gMC.direct] / -8;
-			caretp->cond = TRUE;
+			caretp->cond = true;
 			caretp->ani_no = 0;
 			caretp->ani_wait = 0;
 			switch (gMC.direct)
@@ -702,7 +702,7 @@ void ActMyChar_Dash(CARET *caret, CARET_SPAWNER *caret_spawner)
 			caretp->type = 1;
 			caretp->xm = (dash_xm[gMC.direct] / -8) + Random(-0x200, 0x200);
 			caretp->ym = (dash_ym[gMC.direct] / -8) + Random(-0x200, 0x200);
-			caretp->cond = TRUE;
+			caretp->cond = true;
 			caretp->ani_no = 0;
 			caretp->ani_wait = 0;
 			caretp->x = gMC.x + 0x2000;
@@ -727,7 +727,7 @@ void ActMyChar_Ship(CARET *caret, CARET_SPAWNER *caret_spawner)
 	if (caretsp_i != NO_CARET)
 	{
 		CARET_SPAWNER *caretsp = &caret_spawner[caretsp_i];
-		caretsp->cond = TRUE;
+		caretsp->cond = true;
 		caretsp->type = 0;
 		caretsp->ani_no = 0;
 		caretsp->num = 1;
@@ -758,7 +758,7 @@ void ActMyChar(CARET *caret, CARET_SPAWNER *caret_spawner)
 //Initalize MyChar
 void InitMyChar()
 {
-	gMC.cond = TRUE;
+	gMC.cond = true;
 	gMC.equip = 0;
 	gMC.dead = 0;
 	gMC.level = 0;

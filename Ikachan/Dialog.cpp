@@ -1,6 +1,7 @@
 #include "Dialog.h"
 #include "System.h"
 #include <stdio.h>
+#include <string.h>
 
 //Options
 struct OPTION
@@ -9,48 +10,49 @@ struct OPTION
 	int wnd_size;
 };
 
-LPCTSTR gOptionName = "Option.bin";
+const char* gOptionName = "Option.bin";
 
-BOOL SaveOption(OPTION *option)
+bool SaveOption(OPTION *option)
 {
 	//Open option file
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, gOptionName);
 
 	FILE *fp = fopen(path, "wb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 
 	//Write options
 	fwrite(option, sizeof(OPTION), 1, fp);
 	fclose(fp);
-	return TRUE;
+	return true;
 }
 
-BOOL LoadOption(OPTION *option)
+bool LoadOption(OPTION *option)
 {
 	//Clear option struct
 	memset(option, 0, sizeof(OPTION));
 
 	//Open option file
-	TCHAR path[MAX_PATH];
+	char path[MAX_PATH];
 	sprintf(path, "%s\\%s", gModulePath, gOptionName);
 
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
-		return FALSE;
+		return false;
 
 	//Read options
 	fread(option, sizeof(OPTION), 1, fp);
 	fclose(fp);
-	return TRUE;
+	return true;
 }
 
+#if 0
 //Dialog functions
 void InitDialog(HWND hDlg)
 {
 	//Window size labels
-	const LPCTSTR size_names[3] = {
+	const char* size_names[3] = {
 		"\x83\x74\x83\x8B\x83\x58\x83\x4E\x83\x8A\x81\x5B\x83\x93",
 		"\x83\x45\x83\x43\x83\x93\x83\x68\x83\x45\x33\x32\x30\x78\x32\x34\x30",
 		"\x83\x45\x83\x43\x83\x93\x83\x68\x83\x45\x36\x34\x30\x2A\x34\x38\x30",
@@ -82,7 +84,9 @@ void UseDialog(HWND hDlg)
 	option.wnd_size = (int)gWndSize;
 	SaveOption(&option);
 }
+#endif
 
+#if 0
 INT_PTR CALLBACK DlgProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (Msg)
@@ -91,7 +95,7 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 			InitDialog(hDlg);
 			break;
 		case WM_COMMAND:
-			switch (LOWORD(wParam))
+			switch (wParam)
 			{
 				case 2:
 					EndDialog(hDlg, 0);
@@ -102,7 +106,8 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 					break;
 			}
 		default:
-			return FALSE;
+			return false;
 	}
-	return TRUE;
+	return true;
 }
+#endif

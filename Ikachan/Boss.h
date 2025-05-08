@@ -1,14 +1,15 @@
 #pragma once
 #include "Map.h"
 #include "EventScript.h"
-#include <windows.h>
+//#include <windows.h>
+#include "FakeRect.h"
 
 struct BOSS
 {
-	BOOLEAN cond;
+	bool cond;
 	short life;
 	short shock;
-	BYTE x6;
+	unsigned char x6;
 	char code_char;
 	short code_event;
 	short defeat_event;
@@ -17,8 +18,8 @@ struct BOSS
 	char ani_no;
 	short ani_wait;
 	char direct;
-	BYTE flag;
-	BOOLEAN airborne;
+	unsigned char flag;
+	bool airborne;
 	int x;
 	int y;
 	int xm;
