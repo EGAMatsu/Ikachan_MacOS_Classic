@@ -135,7 +135,7 @@ bool Game() // TODO hWnd
 		caret[i].cond = false;
 	
 	//Load fade surface here for some reason
-	MakeSurface_File("Pbm\\Fade.pbm", SURFACE_ID_FADE);
+	MakeSurface_File("Pbm/Fade.pbm", SURFACE_ID_FADE);
 	
 	//Start game (start in opening)
 	char mode = GAMEMODE_OPENING;
@@ -170,12 +170,12 @@ bool Game() // TODO hWnd
 	}
 	
 	//Load map event and data
-	sprintf(path, "%s\\%s", gModulePath, "Event.ptx");
+	sprintf(path, "%s/%s", gModulePath, "Event.ptx");
 	if (!ReadEventScript(path, &event_scr))
 		return true;
 	DebugPutText((const char*)event_scr.data);
 	
-	sprintf(path, "%s\\%s", gModulePath, "Pbm\\Map1.pbm");
+	sprintf(path, "%s/%s", gModulePath, "Pbm/Map1.pbm");
 	if (!LoadMapData(path, &map))
 		return true;
 	
@@ -227,7 +227,7 @@ bool Game() // TODO hWnd
 	}
 	
 	//Load intro script
-	sprintf(path, "%s\\%s", gModulePath, "Words.ptx");
+	sprintf(path, "%s/%s", gModulePath, "Words.ptx");
 	LoadPixelScript(&pix_scr, path, 2);
 	
 	//Intro
@@ -450,7 +450,7 @@ bool Game() // TODO hWnd
 	PiyoPiyoControl(&piyocont);
 	
 	//Load staff script
-	sprintf(path, "%s\\%s", gModulePath, "Staff.ptx");
+	sprintf(path, "%s/%s", gModulePath, "Staff.ptx");
 	LoadPixelScript(&pix_scr, path, 4);
 	
 	//Staff

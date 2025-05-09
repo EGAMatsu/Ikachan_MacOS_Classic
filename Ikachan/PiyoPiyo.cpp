@@ -275,12 +275,12 @@ void ChangePiyoPiyoVolume(PIYOPIYO_CONTROL *piyocont)
 //PiyoPiyo control
 char* gMusicList[6] =
 {
-	"Pmd\\Ikachan.pmd",
-	"Pmd\\Magirete.pmd",
-	"Pmd\\Buriki.pmd",
-	"Pmd\\Mizuno.pmd",
-	"Pmd\\Quake.pmd",
-	"Pmd\\Tidepool.pmd",
+	"Pmd/Ikachan.pmd",
+	"Pmd/Magirete.pmd",
+	"Pmd/Buriki.pmd",
+	"Pmd/Mizuno.pmd",
+	"Pmd/Quake.pmd",
+	"Pmd/Tidepool.pmd",
 };
 
 void PiyoPiyoControl(PIYOPIYO_CONTROL *piyocont)
@@ -303,7 +303,7 @@ void PiyoPiyoControl(PIYOPIYO_CONTROL *piyocont)
 					
 					//Read given track
 					char path[MAX_PATH];
-					sprintf(path, "%s\\%s", gModulePath, gMusicList[piyocont->track]);
+					sprintf(path, "%s/%s", gModulePath, gMusicList[piyocont->track]);
 					ReadPiyoPiyo(path);
 					MakePiyoPiyoSoundObjects();
 					piyocont->prev_track = piyocont->track;

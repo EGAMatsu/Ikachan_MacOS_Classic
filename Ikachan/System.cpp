@@ -66,7 +66,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char* lpCmdLi
 	//Get module path
 	size_t i;
 	GetModuleFileName(NULL, gModulePath, MAX_PATH);
-	for (i = strlen(gModulePath); gModulePath[i] != '\\'; i--);
+	for (i = strlen(gModulePath); gModulePath[i] != '/'; i--);
 	gModulePath[i] = 0;
 	
 	//Open start dialog
@@ -190,7 +190,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char* lpCmdLi
 		rcFull.bottom = SURFACE_HEIGHT;
 
 		//Load the "LOADING" text
-		bool b = MakeSurface_File("Pbm\\Loading2.pbm", SURFACE_ID_LOADING2);
+		bool b = MakeSurface_File("Pbm/Loading2.pbm", SURFACE_ID_LOADING2);
 
 		//Draw loading screen
 		CortBox(&rcFull, 0x000000);

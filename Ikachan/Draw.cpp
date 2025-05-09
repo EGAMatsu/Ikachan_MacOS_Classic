@@ -167,7 +167,7 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 #if 0
 	//Get path
 	char path[MAX_PATH];
-	sprintf(path, "%s\\%s", gModulePath, name);
+	sprintf(path, "%s/%s", gModulePath, name);
 	
 	//Make sure a surface can be made here
 	if (surf_no > MAX_SURFACE)
