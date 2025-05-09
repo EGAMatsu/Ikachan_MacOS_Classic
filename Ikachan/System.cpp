@@ -9,7 +9,12 @@
 #include <stdlib.h>
 
 #ifdef __linux__
+//Keys
+unsigned long gKey;
+unsigned long gMouse;
 
+//Filepath
+char gModulePath[MAX_PATH];
 
 int Random(int min, int max)
 {
@@ -19,6 +24,10 @@ int Random(int min, int max)
 
 int main(int argc, char** argv)
 {
+	InitTextObject(NULL);
+	InitPiyoPiyo();
+
+	Game();
 	return 0;
 }
 
@@ -27,10 +36,6 @@ bool SystemTask()
 	return true;
 }
 #else
-//Keys
-unsigned long gKey;
-unsigned long gMouse;
-
 //Window name
 const char* lpCaption = "Ikachan";
 
@@ -41,9 +46,6 @@ HACCEL hAccel;
 //Window size
 WND_SIZE gWndSize;
 int gWndWidth, gWndHeight;
-
-//Filepath
-char gModulePath[MAX_PATH];
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 

@@ -224,10 +224,15 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 	//Release image handle
 	DeleteObject(handle);
 	return true;
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	return false;
+#endif
 }
 
 bool MakeSurface_Generic(int bxsize, int bysize, int surf_no)
 {
+#if 0
 	//Make sure a surface can be made here
 	if (surf_no > MAX_SURFACE)
 		return false;
@@ -251,6 +256,7 @@ bool MakeSurface_Generic(int bxsize, int bysize, int surf_no)
 	surf[surf_no]->SetColorKey(DDCKEY_SRCBLT, &ddcolorkey);
 	return true;
 #else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 	return false;
 #endif
 }
@@ -273,6 +279,8 @@ void BackupSurface(int surf_no, const RECT *rect)
 	
 	//Blit backbuffer to destination surface
 	surf[surf_no]->Blt(&rcSet, backbuffer, &rcSet, DDBLT_WAIT, &ddbltfx);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
@@ -316,6 +324,7 @@ void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no)
 
 	//Blit surface (TODO)
 	// backbuffer->Blt(&rcSet, surf[surf_no], &rcWork, DDBLT_KEYSRC | DDBLT_WAIT, NULL);
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }
 
 //Cort box (TODO)
@@ -336,6 +345,8 @@ void CortBox(const RECT *rect, unsigned long col)
 
 	//Blit rect
 	backbuffer->Blt(&rcSet, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
@@ -357,6 +368,8 @@ void CortBox2(const RECT *rect, unsigned long col, int surf_no)
 
 	//Blit rect
 	surf[surf_no]->Blt(&rcSet, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
@@ -380,6 +393,8 @@ void InitTextObject(const char* name)
 
 	//Create font object
 	font = CreateFont(height, width, 0, 0, FW_NORMAL, false, false, false, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_DONTCARE, name);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
@@ -399,6 +414,8 @@ void PutText(int x, int y, const char* text, unsigned long color, bool unk) // T
 
 	//Unlock backbuffer
 	backbuffer->ReleaseDC(hdc);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
@@ -418,10 +435,13 @@ void PutText2(int x, int y, const char* text, unsigned long color, int surf_no, 
 
 	//Unlock surface
 	surf[surf_no]->ReleaseDC(hdc);
+#else
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 
 void EndTextObject()
 {
 	// DeleteObject(font);
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }
