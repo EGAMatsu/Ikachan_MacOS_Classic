@@ -7,6 +7,8 @@
 #include "Game.h"
 #include "Editor.h"
 #include "Boss.h"
+#include <cstddef>
+#include <cstdlib>
 #include <stdio.h>
 
 #define IS_COMMAND(c1, c2) (ptx->data[ptx->p_read] == '<' && ptx->data[ptx->p_read + 1] == (c1) && ptx->data[ptx->p_read + 2] == (c2))
@@ -274,8 +276,27 @@ bool ReadEventScript(const char* path, EVENT_SCR *ptx)
 	fclose(fp);
 	return true;
 #else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	return false;
+	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
+	//Open file
+	FILE *fp = fopen(path, "rb");
+	if (fp == NULL)
+	{
+		perror(path);
+		return false;
+	}
+	//Get filesize
+	fseek(fp, 0, SEEK_END);
+	ptx->size = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	//Allocate data
+	ptx->data = (char*)malloc(ptx->size + 1);
+
+	//Read file
+	fread(ptx->data, ptx->size, 1, fp);
+	fclose(fp);
+
+	return true;
 #endif
 }
 

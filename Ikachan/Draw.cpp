@@ -406,27 +406,9 @@ void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no)
 	SDL_RenderCopy(renderer, surf[surf_no], &srcr, &dstr);
 }
 
-//Cort box (TODO)
+//Cort box
 void CortBox(const RECT *rect, unsigned long col)
 {
-#if 0
-	//Construct rect descriptor
-	static DDBLTFX ddbltfx;
-	memset(&ddbltfx, 0, sizeof(DDBLTFX));
-	ddbltfx.dwSize = sizeof(DDBLTFX);
-	ddbltfx.dwFillColor = col;
-
-	static RECT rcSet;
-	rcSet.left = rect->left * mag;
-	rcSet.top = rect->top * mag;
-	rcSet.right = rect->right * mag;
-	rcSet.bottom = rect->bottom * mag;
-
-	//Blit rect
-	backbuffer->Blt(&rcSet, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
-#else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-
 	SDL_SetRenderDrawColor(renderer, col & 0xFF, (col & 0xFF00) >> 8, (col & 0xFF0000) >> 16, (col & 0xFF000000) >> 24);
 	static RECT rcSet;
 	rcSet.left = rect->left * mag;
@@ -437,7 +419,6 @@ void CortBox(const RECT *rect, unsigned long col)
 
 	//Blit rect
 	SDL_RenderFillRect(renderer, &sr);
-#endif
 }
 
 // TODO

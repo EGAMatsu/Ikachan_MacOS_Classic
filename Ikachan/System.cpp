@@ -5,7 +5,6 @@
 #include "PiyoPiyo.h"
 #include "Dialog.h"
 #include "Game.h"
-#include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
@@ -90,6 +89,62 @@ Fail:
 bool SystemTask()
 {
 	return true;
+}
+
+void ProcessSystemEvent(SDL_Event *e)
+{
+	switch (e->type) {
+	case SDL_KEYDOWN:
+		switch (e->key.keysym.sym) {
+			case SDLK_LEFT:
+				gKey |= KEY_LEFT;
+				break;
+			case SDLK_RIGHT:
+				gKey |= KEY_RIGHT;
+				break;
+			case SDLK_UP:
+				gKey |= KEY_UP;
+				break;
+			case SDLK_DOWN:
+				gKey |= KEY_DOWN;
+				break;
+			case SDLK_z:
+				gKey |= KEY_Z;
+				break;
+			case SDLK_x:
+				gKey |= KEY_X;
+				break;
+			case SDLK_s:
+				gKey |= KEY_S;
+				break;
+		}
+		break;
+	case SDL_KEYUP:
+		switch (e->key.keysym.sym) {
+			case SDLK_LEFT:
+				gKey &= ~KEY_LEFT;
+				break;
+			case SDLK_RIGHT:
+				gKey &= ~KEY_RIGHT;
+				break;
+			case SDLK_UP:
+				gKey &= ~KEY_UP;
+				break;
+			case SDLK_DOWN:
+				gKey &= ~KEY_DOWN;
+				break;
+			case SDLK_z:
+				gKey &= ~KEY_Z;
+				break;
+			case SDLK_x:
+				gKey &= ~KEY_X;
+				break;
+			case SDLK_s:
+				gKey &= ~KEY_S;
+				break;
+		}
+		break;
+	}
 }
 #else
 //Windows objects

@@ -13,7 +13,7 @@
 #include "Editor.h"
 #include "Boss.h"
 #include "Effect.h"
-#include <SDL2/SDL_timer.h>
+#include "System.h"
 #include <stdio.h>
 
 unsigned long gKeyTrg, gMouseTrg, gMouseTrg2;
@@ -146,6 +146,10 @@ bool Game() // TODO hWnd
 	//Opening
 	while (mode == GAMEMODE_OPENING)
 	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			ProcessSystemEvent(&e);
+		}
 		//Start frame
 		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
@@ -184,6 +188,11 @@ bool Game() // TODO hWnd
 	next_mode = GAMEMODE_INTRO;
 	while (mode == GAMEMODE_LOAD)
 	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			ProcessSystemEvent(&e);
+		}
+		
 		//Start frame
 		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
@@ -229,6 +238,10 @@ bool Game() // TODO hWnd
 	//Intro
 	while (mode == GAMEMODE_INTRO)
 	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			ProcessSystemEvent(&e);
+		}
 		//Start frame
 		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
@@ -274,6 +287,10 @@ bool Game() // TODO hWnd
 	//Enter game loop
 	while (mode != GAMEMODE_STAFF)
 	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			ProcessSystemEvent(&e);
+		}
 		//Gameplay
 		while (mode == GAMEMODE_GAMEPLAY)
 		{
@@ -452,6 +469,10 @@ bool Game() // TODO hWnd
 	//Staff
 	while (mode == GAMEMODE_STAFF)
 	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			ProcessSystemEvent(&e);
+		}
 		//Start frame
 		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
