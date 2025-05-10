@@ -1,4 +1,5 @@
 #include "Draw.h"
+#include "FakeRect.h"
 //#include <ddraw.h>
 #include <SDL2/SDL.h>
 #include <stddef.h>
@@ -268,7 +269,7 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 	DeleteObject(handle);
 	return true;
 #else
-	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
+	fprintf(stderr, "unfinished function: %s\n", __PRETTY_FUNCTION__);
 
 	//Get path
 	char path[MAX_PATH];
@@ -295,10 +296,11 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 	int dst_y = 0;
 	int dst_w = s->w * mag;
 	int dst_h = s->h * mag;
-	surf[surf_no] = SDL_CreateTextureFromSurface(renderer, s);
 
 	//Set surface colour key
 	SDL_SetColorKey(s, SDL_TRUE, 0);
+
+	surf[surf_no] = SDL_CreateTextureFromSurface(renderer, s);
 
 	//Release image handle
 	SDL_FreeSurface(s);
@@ -398,12 +400,10 @@ void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no)
 	rcSet.right *= mag;
 	rcSet.bottom *= mag;
 
-	//Blit surface (TODO)
-	// backbuffer->Blt(&rcSet, surf[surf_no], &rcWork, DDBLT_KEYSRC | DDBLT_WAIT, NULL);
-	SDL_Rect srcr ={rcWork.left, rcWork.top, rcWork.right, rcWork.bottom};
-	SDL_Rect dstr = {x, y, rcSet.right, rcSet.bottom};
+	//Blit surface
+	SDL_Rect srcr = FakeRect_to_SDLRect(rcWork);
+	SDL_Rect dstr = FakeRect_to_SDLRect(rcSet);
 	SDL_RenderCopy(renderer, surf[surf_no], &srcr, &dstr);
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }
 
 //Cort box (TODO)
@@ -428,14 +428,15 @@ void CortBox(const RECT *rect, unsigned long col)
 	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 
 	SDL_SetRenderDrawColor(renderer, col & 0xFF, (col & 0xFF00) >> 8, (col & 0xFF0000) >> 16, (col & 0xFF000000) >> 24);
-	static SDL_Rect rcSet;
-	rcSet.x = rect->left * mag;
-	rcSet.y = rect->top * mag;
-	rcSet.w = (rect->right * mag) - rcSet.x;
-	rcSet.h = (rect->bottom * mag) - rcSet.y;
+	static RECT rcSet;
+	rcSet.left = rect->left * mag;
+	rcSet.top = rect->top * mag;
+	rcSet.right = rect->right * mag;
+	rcSet.bottom = rect->bottom * mag;
+	static SDL_Rect sr = FakeRect_to_SDLRect(rcSet);
 
 	//Blit rect
-	SDL_RenderFillRect(renderer, &rcSet);
+	SDL_RenderFillRect(renderer, &sr);
 #endif
 }
 

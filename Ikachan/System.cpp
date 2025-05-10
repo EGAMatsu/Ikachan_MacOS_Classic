@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-#ifdef __linux__
+#if 1
 //Window name
 const char* lpCaption = "Ikachan";
 

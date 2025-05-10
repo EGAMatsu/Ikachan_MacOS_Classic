@@ -7,11 +7,11 @@ LDFLAGS=-g -lSDL2
 
 all: ika
 
-ika: Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
-	$(CXX) $(LDFLAGS) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+ika: Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+	$(CXX) $(LDFLAGS) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
 
 clean:
-	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
 
 # generated with <g++ -MM *.cpp>
 Boss.o: Boss.cpp Boss.h Map.h NpChar.h Effect.h EventScript.h Item.h \
@@ -24,6 +24,7 @@ Effect.o: Effect.cpp Effect.h System.h Draw.h FakeRect.h Map.h NpChar.h
 EventScript.o: EventScript.cpp EventScript.h Map.h NpChar.h Effect.h \
  Item.h PiyoPiyo.h Draw.h FakeRect.h System.h Sound.h Flags.h Player.h \
  Game.h Editor.h Boss.h
+FakeRect.o: FakeRect.cpp FakeRect.h
 Flags.o: Flags.cpp Flags.h
 Game.o: Game.cpp Game.h FakeRect.h Generic.h Item.h Draw.h System.h \
  Flags.h PixelScript.h PiyoPiyo.h EventScript.h Map.h NpChar.h Effect.h \
