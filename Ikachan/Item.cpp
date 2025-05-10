@@ -12,16 +12,13 @@ unsigned char item_equip[12] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00,
 //Item inventory initialization and inventory drawing
 void InitItem(ITEMS *items)
 {
-#if 0
+	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
 	//Allocate items
-	items->code = (char*)LocalAlloc(LPTR, MAX_ITEMS * sizeof(char));
+	items->code = (char*)malloc(MAX_ITEMS * sizeof(char));
 
 	//Reset item codes
 	for (int i = 0; i < MAX_ITEMS; i++)
 		items->code[i] = 0;
-#else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-#endif
 }
 
 void PutItem(ITEMS *items)

@@ -30,8 +30,27 @@ bool ReadPixelScript(PIX_SCR *ptx, const char* path)
 	fclose(fp);
 	return true;
 #else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	return false;
+	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
+	//Open file
+	FILE *fp = fopen(path, "rb");
+	if (fp == NULL)
+	{
+		perror(path);
+		return false;
+	}
+	//Get filesize
+	fseek(fp, 0, SEEK_END);
+	ptx->size = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	//Allocate data
+	ptx->data = (char*)malloc(ptx->size + 1);
+
+	//Read file
+	fread(ptx->data, ptx->size, 1, fp);
+	fclose(fp);
+
+	return true;
 #endif
 }
 
@@ -56,6 +75,10 @@ void LoadPixelScript(PIX_SCR *ptx, const char* path, char scale)
 int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, bool ending)
 {
 	char c[44];
+
+	if (!ptx->data) {
+		fprintf(stderr, "WARNING: ptx->data is null! (%s)\n", __PRETTY_FUNCTION__);
+	}
 	
 	//Draw illustration
 	if (ending)
@@ -166,6 +189,6 @@ int PixelScriptProc(PIX_SCR *ptx, PIYOPIYO_CONTROL *piyocont, bool ending)
 void EndPixelScript(PIX_SCR *ptx)
 {
 	//Release data
-	// LocalFree((HLOCAL)ptx->data);
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	free(ptx->data);
+	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
 }

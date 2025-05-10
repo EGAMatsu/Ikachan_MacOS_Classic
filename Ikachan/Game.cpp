@@ -294,6 +294,10 @@ bool Game() // TODO hWnd
 		//Gameplay
 		while (mode == GAMEMODE_GAMEPLAY)
 		{
+			SDL_Event e;
+			while (SDL_PollEvent(&e)) {
+				ProcessSystemEvent(&e);
+			}
 			//Start frame
 			tick = SDL_GetTicks();
 			PiyoPiyoControl(&piyocont);
@@ -398,6 +402,10 @@ bool Game() // TODO hWnd
 		//Inventory
 		while (mode == GAMEMODE_INVENTORY)
 		{
+			SDL_Event e;
+			while (SDL_PollEvent(&e)) {
+				ProcessSystemEvent(&e);
+			}
 			//Start frame
 			tick = SDL_GetTicks();
 			PiyoPiyoControl(&piyocont);
@@ -425,6 +433,10 @@ bool Game() // TODO hWnd
 		//Editor
 		while (mode == GAMEMODE_EDITOR)
 		{
+			SDL_Event e;
+			while (SDL_PollEvent(&e)) {
+				ProcessSystemEvent(&e);
+			}
 			//Start frame
 			tick = SDL_GetTicks();
 			GetTrg();
