@@ -4,9 +4,26 @@
 #include "Boss.h"
 #include <stdio.h>
 
+typedef struct BITMAPFILEHEADER
+{
+	unsigned short bfType;
+	char unused[12];
+
+} BITMAPFILEHEADER;
+
+typedef struct BITMAPINFOHEADER
+{
+	char unused1[4];
+	int biWidth; // TODO this won't work on platforms where sizeof(int) != 4
+	int biHeight;
+	char unused2[2];
+	unsigned short biBitCount;
+	char unused3[24];
+} BITMAPINFOHEADER;
+
 bool LoadMapData(const char* path, MAP *map)
 {
-#if 0
+	fprintf(stderr, "untested function: %s\n", __PRETTY_FUNCTION__);
 	//Open file
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL)
@@ -17,6 +34,7 @@ bool LoadMapData(const char* path, MAP *map)
 	BITMAPINFOHEADER bitmap_info_header;
 	unsigned long bitmap_pal_data[0x100];
 
+	// TODO fix assumed endianness and type sizes
 	fread(&bitmap_file_header, sizeof(BITMAPFILEHEADER), 1, fp);
 	fread(&bitmap_info_header, sizeof(BITMAPINFOHEADER), 1, fp);
 	fread(bitmap_pal_data, 4, 0x100, fp);
@@ -30,10 +48,10 @@ bool LoadMapData(const char* path, MAP *map)
 	//Get width and height and allocate buffer
 	map->width = bitmap_info_header.biWidth;
 	map->length = bitmap_info_header.biHeight;
-	unsigned char *final_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
+	unsigned char *final_buf = (unsigned char*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
 	
 	//Read data from file
-	unsigned char *pre_buf = (BYTE*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
+	unsigned char *pre_buf = (unsigned char*)malloc(bitmap_info_header.biWidth * bitmap_info_header.biHeight);
 	fread(pre_buf, 1, bitmap_info_header.biWidth * bitmap_info_header.biHeight, fp);
 	fclose(fp);
 	
@@ -51,10 +69,6 @@ bool LoadMapData(const char* path, MAP *map)
 	//Use data
 	map->data = final_buf;
 	return true;
-#else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	return false;
-#endif
 }
 
 //Background drawing
