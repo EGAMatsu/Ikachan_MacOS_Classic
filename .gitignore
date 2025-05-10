@@ -87,5 +87,12 @@ ipch/
 /Ikachan.mpp
 /Ikachan/*.aps
 
+/Ikachan/Pbm
+/Ikachan/Pmd
+/Ikachan/NPChar.dat
+/Ikachan/Option.bin
+/Ikachan/Staff.ptx
+/Ikachan/Words.ptx
+/Ikachan/Event.ptx
 *.o
 ika

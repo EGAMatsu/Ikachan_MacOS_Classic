@@ -13,6 +13,7 @@
 #include "Editor.h"
 #include "Boss.h"
 #include "Effect.h"
+#include <SDL2/SDL_timer.h>
 #include <stdio.h>
 
 unsigned long gKeyTrg, gMouseTrg, gMouseTrg2;
@@ -45,7 +46,6 @@ void GetTrg()
 
 unsigned long CountFramePerSecound()
 {
-#if 0
 	unsigned long current_tick;
 	static bool first = true;
 	static unsigned long max_count;
@@ -54,11 +54,11 @@ unsigned long CountFramePerSecound()
 
 	if (first)
 	{
-		wait = GetTickCount();
+		wait = SDL_GetTicks();
 		first = false;
 	}
 
-	current_tick = GetTickCount();
+	current_tick = SDL_GetTicks();
 	++count;
 
 	if (wait + 1000 <= current_tick)
@@ -69,10 +69,6 @@ unsigned long CountFramePerSecound()
 	}
 
 	return max_count;
-#else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	return 0LU;
-#endif
 }
 
 enum GAMEMODE
@@ -151,7 +147,7 @@ bool Game() // TODO hWnd
 	while (mode == GAMEMODE_OPENING)
 	{
 		//Start frame
-		// tick = GetTickCount(); // TODO
+		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);
@@ -164,8 +160,8 @@ bool Game() // TODO hWnd
 			mode = GAMEMODE_LOAD;
 		
 		//End frame
-		// if (!Flip_SystemTask(hWnd))
-		// 	return true;
+		if (!Flip_SystemTask())
+			return true;
 		PiyoPiyoProc();
 	}
 	
@@ -189,7 +185,7 @@ bool Game() // TODO hWnd
 	while (mode == GAMEMODE_LOAD)
 	{
 		//Start frame
-		// tick = GetTickCount(); // TODO
+		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);
@@ -206,8 +202,8 @@ bool Game() // TODO hWnd
 		PutMsgBox(&event_scr);
 		
 		//End frame
-		// if (!Flip_SystemTask(hWnd))
-		// 	return true;
+		if (!Flip_SystemTask())
+			return true;
 		PiyoPiyoProc();
 	}
 	
@@ -234,7 +230,7 @@ bool Game() // TODO hWnd
 	while (mode == GAMEMODE_INTRO)
 	{
 		//Start frame
-		// tick = GetTickCount(); // TODO
+		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x00FFFF);
@@ -248,8 +244,8 @@ bool Game() // TODO hWnd
 		}
 		
 		//End frame
-		// if (!Flip_SystemTask(hWnd))
-		// 	return true;
+		if (!Flip_SystemTask())
+			return true;
 		PiyoPiyoProc();
 	}
 	EndPixelScript(&pix_scr);
@@ -257,8 +253,8 @@ bool Game() // TODO hWnd
 	//Draw loading screen
 	CortBox(&grcFull, 0x000000);
 	PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 16, (SURFACE_HEIGHT / 2) - 4, &grcLoading, SURFACE_ID_LOADING);
-	// if (!Flip_SystemTask(hWnd))
-	// 	return true;
+	if (!Flip_SystemTask())
+		return true;
 	
 	//Play theme song
 	piyocont.track = 0;
@@ -282,7 +278,7 @@ bool Game() // TODO hWnd
 		while (mode == GAMEMODE_GAMEPLAY)
 		{
 			//Start frame
-			// tick = GetTickCount(); // TODO
+			tick = SDL_GetTicks();
 			PiyoPiyoControl(&piyocont);
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
@@ -377,8 +373,8 @@ bool Game() // TODO hWnd
 			
 			//End frame
 			PutNumber(SURFACE_WIDTH - 48, 0, CountFramePerSecound());
-			// if (!Flip_SystemTask(hWnd))
-			// 	return true;
+			if (!Flip_SystemTask())
+				return true;
 			PiyoPiyoProc();
 		}
 		
@@ -386,7 +382,7 @@ bool Game() // TODO hWnd
 		while (mode == GAMEMODE_INVENTORY)
 		{
 			//Start frame
-			// tick = GetTickCount(); // TODO
+			tick = SDL_GetTicks();
 			PiyoPiyoControl(&piyocont);
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
@@ -404,8 +400,8 @@ bool Game() // TODO hWnd
 			PutMyStatus();
 			
 			//End frame
-			// if (!Flip_SystemTask(hWnd))
-			// 	return true;
+			if (!Flip_SystemTask())
+				return true;
 			PiyoPiyoProc();
 		}
 		
@@ -413,7 +409,7 @@ bool Game() // TODO hWnd
 		while (mode == GAMEMODE_EDITOR)
 		{
 			//Start frame
-			// tick = GetTickCount(); // TODO
+			tick = SDL_GetTicks();
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
 			
@@ -439,8 +435,8 @@ bool Game() // TODO hWnd
 			PutMsgBox(&event_scr);
 			
 			//End frame
-			// if (!Flip_SystemTask(hWnd))
-			// 	return true;
+			if (!Flip_SystemTask())
+				return true;
 		}
 	}
 	
@@ -457,7 +453,7 @@ bool Game() // TODO hWnd
 	while (mode == GAMEMODE_STAFF)
 	{
 		//Start frame
-		// tick = GetTickCount(); // TODO
+		tick = SDL_GetTicks();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);
@@ -466,8 +462,8 @@ bool Game() // TODO hWnd
 		PixelScriptProc(&pix_scr, &piyocont, true);
 		
 		//End frame
-		// if (!Flip_SystemTask(hWnd))
-		// 	return true;
+		if (!Flip_SystemTask())
+			return true;
 		PiyoPiyoProc();
 	}
 	return false;

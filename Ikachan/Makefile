@@ -3,7 +3,7 @@
 
 CXX=g++
 CXXFLAGS=-std=c++98 -Wpedantic -g
-LDFLAGS=-g
+LDFLAGS=-g -lSDL2
 
 all: ika
 

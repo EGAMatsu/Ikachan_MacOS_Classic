@@ -1,5 +1,6 @@
 #pragma once
 //#include <windows.h>
+#include <SDL2/SDL.h>
 #include "FakeRect.h"
 #include "System.h"
 
@@ -70,7 +71,9 @@ extern RECT grcFull;
 
 void SetClientOffset(int width, int height);
 //bool Flip_SystemTask(HWND hWnd);
+bool Flip_SystemTask();
 //bool StartDirectDraw(HWND hWnd, int wndSize);
+bool StartDirectDraw(SDL_Window *window, int wndSize);
 //void EndDirectDraw(HWND hWnd);
 bool MakeSurface_File(const char* name, int surf_no);
 bool MakeSurface_Generic(int bxsize, int bysize, int surf_no);

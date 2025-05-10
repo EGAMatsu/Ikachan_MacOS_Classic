@@ -5,10 +5,19 @@
 #include "PiyoPiyo.h"
 #include "Dialog.h"
 #include "Game.h"
+#include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
 
 #ifdef __linux__
+//Window name
+const char* lpCaption = "Ikachan";
+
+//Window size
+WND_SIZE gWndSize;
+int gWndWidth, gWndHeight;
+
 //Keys
 unsigned long gKey;
 unsigned long gMouse;
@@ -24,11 +33,58 @@ int Random(int min, int max)
 
 int main(int argc, char** argv)
 {
+	int status = EXIT_FAILURE;
+	SDL_Window *window = NULL;
+
+	RECT rcLoading = { 0, 0, 64, 8 };
+	RECT rcFull = { 0, 0, 0, 0 };
+
+	gModulePath[0] = '.';
+
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
+		fprintf(stderr, "SDL init fail: %s\n", SDL_GetError());
+		goto Fail;
+	}
+
+	window = SDL_CreateWindow(lpCaption, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SURFACE_WIDTH, SURFACE_HEIGHT, SDL_WINDOW_SHOWN);
+	if (!window)
+	{
+		fprintf(stderr, "SDL create window fail: %s\n", SDL_GetError());
+		goto Fail_Subsystem;
+	}
+
+	if (!StartDirectDraw(window, gWndSize))
+	{
+		goto Fail_Window;
+	}
+
+	//Set rects
+	rcFull.right = SURFACE_WIDTH;
+	rcFull.bottom = SURFACE_HEIGHT;
+
+	//Load the "LOADING" text
+	MakeSurface_File("Pbm/Loading2.pbm", SURFACE_ID_LOADING2);
+
+	//Draw loading screen
+	CortBox(&rcFull, 0x000000UL);
+	PutBitmap3(&rcFull, (SURFACE_WIDTH / 2) - 32, (SURFACE_HEIGHT / 2) - 4, &rcLoading, SURFACE_ID_LOADING2);
+
+
+	Flip_SystemTask();
 	InitTextObject(NULL);
 	InitPiyoPiyo();
 
 	Game();
-	return 0;
+
+	// cleanup
+	status = EXIT_SUCCESS;
+Fail_Window:
+	SDL_DestroyWindow(window);
+Fail_Subsystem:
+	SDL_Quit();
+Fail:
+	return status;
 }
 
 bool SystemTask()
@@ -36,16 +92,9 @@ bool SystemTask()
 	return true;
 }
 #else
-//Window name
-const char* lpCaption = "Ikachan";
-
 //Windows objects
 HWND ghWnd;
 HACCEL hAccel;
-
-//Window size
-WND_SIZE gWndSize;
-int gWndWidth, gWndHeight;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 

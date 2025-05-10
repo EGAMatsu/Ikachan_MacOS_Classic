@@ -9,8 +9,8 @@
             "name": "Debug",
             "type": "gdb",
             "request": "launch",
-            "target": "./Ikachan/ika",
-            "cwd": "${workspaceRoot}",
+            "target": "./ika",
+            "cwd": "${workspaceRoot}/Ikachan",
             "valuesFormatting": "parseText"
         }
     ]
