@@ -69,8 +69,8 @@ enum SURFACE_ID
 extern RECT grcFull;
 
 void SetClientOffset(int width, int height);
-//bool Flip_SystemTask(HWND hWnd);
-bool Flip_SystemTask();
+//bool Flip_SystemTask_IKA(HWND hWnd);
+bool Flip_SystemTask_IKA();
 //bool StartDirectDraw(HWND hWnd, int wndSize);
 bool StartDirectDraw(void *window, int wndSize);
 //void EndDirectDraw(HWND hWnd);

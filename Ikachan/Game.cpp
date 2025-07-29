@@ -148,9 +148,10 @@ bool Game() // TODO hWnd
 	//Opening
 	while (mode == GAMEMODE_OPENING)
 	{
+		ProcessSystemEvent(NULL);
 		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
-			ProcessSystemEvent(&e);
+			ProcessSystemEvent();
 			if (e.type == SDL_QUIT) {
 				return true;
 			}
@@ -169,7 +170,7 @@ bool Game() // TODO hWnd
 			mode = GAMEMODE_LOAD;
 		
 		//End frame
-		if (!Flip_SystemTask())
+		if (!Flip_SystemTask_IKA())
 			return true;
 		PiyoPiyoProc();
 	}
@@ -193,6 +194,7 @@ bool Game() // TODO hWnd
 	next_mode = GAMEMODE_INTRO;
 	while (mode == GAMEMODE_LOAD)
 	{
+		ProcessSystemEvent(NULL);
 		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
@@ -216,7 +218,7 @@ bool Game() // TODO hWnd
 		PutMsgBox(&event_scr);
 		
 		//End frame
-		if (!Flip_SystemTask())
+		if (!Flip_SystemTask_IKA())
 			return true;
 		PiyoPiyoProc();
 	}
@@ -243,6 +245,7 @@ bool Game() // TODO hWnd
 	//Intro
 	while (mode == GAMEMODE_INTRO)
 	{
+		ProcessSystemEvent(NULL);
 		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
@@ -265,7 +268,7 @@ bool Game() // TODO hWnd
 		}
 		
 		//End frame
-		if (!Flip_SystemTask())
+		if (!Flip_SystemTask_IKA())
 			return true;
 		PiyoPiyoProc();
 	}
@@ -274,7 +277,7 @@ bool Game() // TODO hWnd
 	//Draw loading screen
 	CortBox(&grcFull, 0x000000);
 	PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 16, (SURFACE_HEIGHT / 2) - 4, &grcLoading, SURFACE_ID_LOADING);
-	if (!Flip_SystemTask())
+	if (!Flip_SystemTask_IKA())
 		return true;
 	
 	//Play theme song
@@ -295,6 +298,7 @@ bool Game() // TODO hWnd
 	//Enter game loop
 	while (mode != GAMEMODE_STAFF)
 	{
+		ProcessSystemEvent(NULL);
 		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
@@ -305,6 +309,7 @@ bool Game() // TODO hWnd
 		//Gameplay
 		while (mode == GAMEMODE_GAMEPLAY)
 		{
+			ProcessSystemEvent(NULL);
 			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
@@ -408,7 +413,7 @@ bool Game() // TODO hWnd
 			
 			//End frame
 			PutNumber(SURFACE_WIDTH - 48, 0, CountFramePerSecound());
-			if (!Flip_SystemTask())
+			if (!Flip_SystemTask_IKA())
 				return true;
 			PiyoPiyoProc();
 		}
@@ -416,6 +421,7 @@ bool Game() // TODO hWnd
 		//Inventory
 		while (mode == GAMEMODE_INVENTORY)
 		{
+			ProcessSystemEvent(NULL);
 			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
@@ -442,7 +448,7 @@ bool Game() // TODO hWnd
 			PutMyStatus();
 			
 			//End frame
-			if (!Flip_SystemTask())
+			if (!Flip_SystemTask_IKA())
 				return true;
 			PiyoPiyoProc();
 		}
@@ -450,6 +456,7 @@ bool Game() // TODO hWnd
 		//Editor
 		while (mode == GAMEMODE_EDITOR)
 		{
+			ProcessSystemEvent(NULL);
 			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
@@ -484,7 +491,7 @@ bool Game() // TODO hWnd
 			PutMsgBox(&event_scr);
 			
 			//End frame
-			if (!Flip_SystemTask())
+			if (!Flip_SystemTask_IKA())
 				return true;
 		}
 	}
@@ -501,6 +508,7 @@ bool Game() // TODO hWnd
 	//Staff
 	while (mode == GAMEMODE_STAFF)
 	{
+		ProcessSystemEvent(NULL);
 		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
@@ -518,7 +526,7 @@ bool Game() // TODO hWnd
 		PixelScriptProc(&pix_scr, &piyocont, true);
 		
 		//End frame
-		if (!Flip_SystemTask())
+		if (!Flip_SystemTask_IKA())
 			return true;
 		PiyoPiyoProc();
 	}

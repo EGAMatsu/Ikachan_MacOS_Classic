@@ -46,14 +46,14 @@ void SetClientOffset(int width, int height)
 
 #if 0
 //End of frame function
-bool Flip_SystemTask(HWND hWnd)
+bool Flip_SystemTask_IKA(HWND hWnd)
 {
 	//Run system tasks while waiting for next frame
 	static unsigned long timePrev;
 	while (GetTickCount() < (timePrev + 20))
 	{
 		Sleep(1);
-		if (!SystemTask())
+		if (!SystemTask_IKA())
 			return false;
 	}
 
@@ -168,7 +168,7 @@ void EndDirectDraw(HWND hWnd)
 #endif
 
 //End of frame function
-bool Flip_SystemTask()
+bool Flip_SystemTask_IKA()
 {
 	/* TODO: IMPLEMENT */
 	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);

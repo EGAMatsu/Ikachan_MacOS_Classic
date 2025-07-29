@@ -7,11 +7,14 @@
 #include "Game.h"
 #include <stdio.h>
 #include <stdlib.h>
-//#include <SDL2/SDL.h>
+#include "macInclude.h"
 
 #if 1
+
 //Window name
 const char* lpCaption = "Ikachan";
+WindowPtr ikaWindow;
+GrafPtr thePort;
 
 //Window size
 WND_SIZE gWndSize;
@@ -30,6 +33,15 @@ int Random(int min, int max)
 	return (rand() % range) + min;
 }
 
+unsigned char* CToPascalStr(const char* cstr) {
+    static unsigned char pstr[256]; // static so it's valid after return
+    size_t len = strlen(cstr);
+    if (len > 255) len = 255;       // truncate if too long
+    pstr[0] = (unsigned char)len;
+    memcpy(&pstr[1], cstr, len);
+    return pstr;
+}
+
 int main(int argc, char** argv)
 {
 	int status = EXIT_FAILURE;
@@ -39,6 +51,21 @@ int main(int argc, char** argv)
 	RECT rcFull = { 0, 0, 0, 0 };
 
 	gModulePath[0] = '.';
+
+	InitGraf(&thePort);
+    InitFonts();
+    InitWindows();
+    InitMenus();
+    InitDialogs(nil);
+    InitCursor();
+
+	Rect bounds;
+	bounds.top    = (384 - SURFACE_HEIGHT) / 2;
+	bounds.left   = (512 - SURFACE_WIDTH) / 2;
+	bounds.bottom = bounds.top  + SURFACE_HEIGHT;
+	bounds.right  = bounds.left + SURFACE_WIDTH;
+
+	ikaWindow = NewWindow(nil, &bounds, CToPascalStr("Ikachan"), true, noGrowDocProc, (WindowPtr)-1, false, 0);
 
 	/*if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
@@ -62,6 +89,9 @@ int main(int argc, char** argv)
 	rcFull.right = SURFACE_WIDTH;
 	rcFull.bottom = SURFACE_HEIGHT;*/
 
+	ShowWindow(ikaWindow);
+    SetPort(ikaWindow);
+
 	//Load the "LOADING" text
 	MakeSurface_File("Pbm/Loading2.pbm", SURFACE_ID_LOADING2);
 
@@ -70,7 +100,7 @@ int main(int argc, char** argv)
 	PutBitmap3(&rcFull, (SURFACE_WIDTH / 2) - 32, (SURFACE_HEIGHT / 2) - 4, &rcLoading, SURFACE_ID_LOADING2);
 
 
-	Flip_SystemTask();
+	Flip_SystemTask_IKA();
 	InitTextObject(NULL);
 	InitPiyoPiyo();
 
@@ -86,65 +116,23 @@ Fail:
 	return status;
 }
 
-bool SystemTask()
+bool SystemTask_IKA()
 {
 	return true;
 }
 
+EventRecord event;
 void ProcessSystemEvent(void *e)
 {
-	/*switch (e->type) {
-	case SDL_KEYDOWN:
-		switch (e->key.keysym.sym) {
-			case SDLK_LEFT:
-				gKey |= KEY_LEFT;
-				break;
-			case SDLK_RIGHT:
-				gKey |= KEY_RIGHT;
-				break;
-			case SDLK_UP:
-				gKey |= KEY_UP;
-				break;
-			case SDLK_DOWN:
-				gKey |= KEY_DOWN;
-				break;
-			case SDLK_z:
-				gKey |= KEY_Z;
-				break;
-			case SDLK_x:
-				gKey |= KEY_X;
-				break;
-			case SDLK_s:
-				gKey |= KEY_S;
-				break;
+	if (WaitNextEvent(everyEvent, &event, 0, nil)) {
+		if (event.what == mouseDown) {
+			WindowPtr whichWindow;
+			short part = FindWindow(event.where, &whichWindow);
+			if (part == inDrag) {
+				DragWindow(whichWindow, event.where, &qd.screenBits.bounds);
+			}
 		}
-		break;
-	case SDL_KEYUP:
-		switch (e->key.keysym.sym) {
-			case SDLK_LEFT:
-				gKey &= ~KEY_LEFT;
-				break;
-			case SDLK_RIGHT:
-				gKey &= ~KEY_RIGHT;
-				break;
-			case SDLK_UP:
-				gKey &= ~KEY_UP;
-				break;
-			case SDLK_DOWN:
-				gKey &= ~KEY_DOWN;
-				break;
-			case SDLK_z:
-				gKey &= ~KEY_Z;
-				break;
-			case SDLK_x:
-				gKey &= ~KEY_X;
-				break;
-			case SDLK_s:
-				gKey &= ~KEY_S;
-				break;
-		}
-		break;
-	}*/
+	}
 }
 #else
 //Windows objects
@@ -299,7 +287,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char* lpCmdLi
 		//Draw loading screen
 		CortBox(&rcFull, 0x000000);
 		PutBitmap3(&rcFull, (SURFACE_WIDTH / 2) - 32, (SURFACE_HEIGHT / 2) - 4, &rcLoading, SURFACE_ID_LOADING2);
-		if (!Flip_SystemTask(hWnd))
+		if (!Flip_SystemTask_IKA(hWnd))
 		{
 			//Release Ikachan mutex
 			ReleaseMutex(hMutex);
@@ -526,7 +514,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 }
 
 //System task
-bool SystemTask()
+bool SystemTask_IKA()
 {
 	MSG Msg;
 	while (PeekMessage(&Msg, NULL, 0, 0, PM_NOREMOVE) || bActive == false)

@@ -1,6 +1,7 @@
 #pragma once
 //#include <windows.h>
 //#include <SDL2/SDL.h>
+#include <cstring>
 #include <cstdlib>
 
 //Keys
@@ -39,5 +40,6 @@ extern WND_SIZE gWndSize;
 extern char gModulePath[MAX_PATH];
 
 int Random(int min, int max);
-bool SystemTask();
+bool SystemTask_IKA();
 void ProcessSystemEvent(void *e);
+unsigned char* CToPascalStr(const char* cstr);
