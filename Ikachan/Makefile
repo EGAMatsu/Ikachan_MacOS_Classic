@@ -7,14 +7,15 @@ LDFLAGS = -g
 
 TARGNM	= ika
 TARGET  = $(TARGNM).code.bin
+TARGDSK	= IKACHAN.dsk
 
-all: $(TARGET) $(TARGNM).dsk
+all: $(TARGET) $(TARGDSK)
 
 $(TARGET): Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
 	$(CXX) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(LDFLAGS)
 
 clean:
-	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(TARGET) $(TARGNM)
+	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(TARGET) $(TARGNM) $(TARGDSK)
 
 # generated with <g++ -MM *.cpp>
 Boss.o: Boss.cpp Boss.h Map.h NpChar.h Effect.h EventScript.h Item.h \
@@ -56,9 +57,31 @@ System.o: System.cpp System.h Draw.h FakeRect.h Sound.h Generic.h \
 
 # Lifted from ClassiCube
 REZFLAGS=-I$(Retro68)/RIncludes
-$(TARGNM).bin $(TARGNM).APPL $(TARGNM).dsk: $(TARGET)
+DATASRC  = ../Ikachan_Data
+
+$(TARGDSK): $(TARGET)
 	Rez $(REZFLAGS) \
 		--copy "$(TARGNM).code.bin" \
 		"Resource/IKA.R" \
 		-t "APPL" -c "????" \
-		-o $(TARGNM).bin --cc $(TARGNM).APPL --cc $(TARGNM).dsk
+		-o $(TARGNM).bin --cc $(TARGNM).APPL --cc $(TARGDSK)
+
+	# Add files
+	hmount $(TARGDSK)
+
+	# Add folders and copy contents
+	for dir in $(shell find $(DATASRC) -mindepth 1 -type d -printf "%f\n"); do \
+		hmkdir ":$$dir"; \
+		for file in $(DATASRC)/$$dir/*; do \
+			hcopy "$$file" ":$$dir"; \
+		done; \
+	done
+
+	for file in $(shell find $(DATASRC) -maxdepth 1 -type f); do \
+		hcopy "$$file" :; \
+	done
+
+	# Make readme.txt readable.
+	hattrib -t TEXT -c ttxt :Readme
+
+	humount

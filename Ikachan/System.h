@@ -4,6 +4,11 @@
 #include <cstring>
 #include <cstdlib>
 
+#ifndef fsRtDirID
+#define fsRtDirID 2
+#endif
+
+
 //Keys
 #define MOUSE_RIGHT (0x00000001)
 #define MOUSE_LEFT  (0x00000002)
@@ -34,7 +39,7 @@ extern WND_SIZE gWndSize;
 
 //Filepath
 #ifndef MAX_PATH
-#define MAX_PATH 260
+#define MAX_PATH 256
 #endif
 
 extern char gModulePath[MAX_PATH];
@@ -43,3 +48,4 @@ int Random(int min, int max);
 bool SystemTask_IKA();
 void ProcessSystemEvent(void *e);
 unsigned char* CToPascalStr(const char* cstr);
+void ConvertPathToMac(char *path);

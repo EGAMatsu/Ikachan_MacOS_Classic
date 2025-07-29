@@ -1,0 +1,900 @@
+f50 Fooze's request
+f51 Zuu battle start
+f52 Zuu battle end
+f53 Crack widens due to earthquake
+f54 Got pearl manual
+f55 Sandwich dollar
+f56 Shrimp platter
+f57 Crab platter
+f58 Globefish platter
+f59 Pearl taken
+f60 Pinky falls down
+f61 Trapped
+f62 Capacitor
+f63 Pinky go home
+f64 Got globefish platter
+f65 Carrier poisoned
+f66 Ironhead defeated.
+f67 Final earthquake
+#e0000~DUMMY~~~~~~~~~~~
+<end
+#e0001~~~~~~~~~~~~~~~~~
+Continue from saved game?
+<yn0008
+<end
+#e0002~START~~~~~~~~~~~
+<ps
+<ds
+With a start, you wake up,+
+and find yourself somewhere underwater.{
+......{
+<fi
+<nm
+Where is this place?{
+<pp
+<end
+#e0003~SLEEP~~~~~~~~~~~
+<fj0067-0000
+Do you want to rest?
+<yn0004
+<ij0011-0000
+Do you want to save?
+<yn0005
+<end
+#e0004~SLEEP~~~~~~~~~~~
+<fo
+<wa0040
+<ma
+<ce
+<wa0080
+<e+
+<fi
+<nm
+Good morning!{
+<ij0011-0000
+Do you want to save?
+<yn0005
+<end
+#e0005~SLEEP~~~~~~~~~~~
+<ds
+Game saved.{
+<end
+#e0006~~~~~~~~~~~~~~~~~
+You were blown to smithereens...{
+Want to retry?
+<yn0007
+<ex
+<end
+#e0007~~~~~~~~~~~~~~~~~
+Loading...{
+<fo
+<wa0040
+<ma
+<wa0080
+<dl
+<ce
+<pd0000
+<fi
+<nm
+<re
+Game loaded.{
+<end
+#e0008~CONTINUE~~~~~~~~
+<dl
+<end
+#e0050~~~~~~~~~~~~~~~~~
+<ij0011-0115
+<fj0059-0131
+<fj0058-0129
+<ij0005-0130
+<fj0052-0128
+<fj0050-0127
+<ij0001-0126
+I ain't got a pearl,+
+so I'm hiding down here.{
+For those of us who can't roam around+
+freely, it's pretty annoying...{
+By the way,{
+You don't seem to have a pearl either,+
+did you come here from deeper in?
+<yn0051
+Well, if you head on down deeper in,+
+the place is all covered in spikes.{
+Best not to go that way.{
+<end
+#e0051~~~~~~~~~~~~~~~~
+Oh!{
+These depths are dangerous, ya know.+
+You're not hurt, are you?{
+<end
+#e0052~~~~~~~~~~~~~~~~
+<ij0011-0118
+<fj0066-0107
+A pearl?{
+Yeah, I have one.+
+Around here, if you don't have a pearl,+
+you're treated like an outsider.{
+<ij0005-0087
+Looks like you don't have one, huh?{
+Not everyone's gonna be easy-going like me.+
+Watch out for bad guys, yeah?{
+<end
+#e0053~~~~~~~~~~~~~~~~
+<ij0011-0117
+<fj0066-0107
+<fj0054-0071
+What's a pearl, you ask?{
+Here, read this.{
+<i+0004
+<f+0054
+You received a piece of paper.{
+<end
+#e0054~(FOODS)~~~~~~~~
+<ij0011-0113
+<fj0066-0104
+<fj0063-0099
+<fj0059-0089
+<ij0006-0085
+<ij0007-0085
+
+<fj0058-0084
+<fj0057-0081
+<fj0056-0078
+
+<fj0050-0059
+*Sigh*... Just can't catch a break...{
+Hm?{
+Are you, by any chance...+
+Are you Pearl Carrier?
+<yn0056
+Oh, that's a relief...{
+Ah, I'm the food storehouse manager, Fooze.{
+From what I can tell,+
+you're an outsider, aren't you?+
+In that case, I have a favour to ask of you.+
+Would you hear me out?
+<yn0057
+I see... that's too bad.{
+<end
+#e0056~(FOODS)~~~~~~~~~
+All clear at the food storehouse, sir!{
+I will guard this storehouse,+
+even at the cost of my life!{
+<end
+#e0057~(FOODS)~~~~~~~~~
+<ph
+So, the thing is...{
+My pearl seems to have gone missing.+
+I'd like you to find it for me.{
+Also,{
+The fact that I don't have my pearl on me...+
+You have to keep it a secret, ok?{
+Please take this with you.{
+You received a [Strange Liquid].{
+<i+0003
+<f+0050
+<pn
+<end
+#e0058~(ZOO)~~~~~~~~~~
+<ij0011-0114
+<fj0052-0066
+<fj0051-0000
+<pf
+Wah!{
+What might you be doing all the way out here?+
+Also, aren't you Pearl Carrier?+
+Ironhead's dog...{
+Now that I've found you,+
+I shan't let you take one step further!{
+<se0005
+<pc0057-0031-0000
+<pc0046-0030-0129
+<pd0002
+<f+0051
+<end
+#e0059~(FOODS)~~~~~~~~~
+Well, then...+
+Thank you and good luck.{
+<end
+#e0060~(ZOO1)~~~~~~~~~~
+<se0005
+<pc0060-0031-0000
+<end
+#e0061~(ZOO2)~~~~~~~~~~
+<se0005
+<pc0051-0032-0000
+<pc0054-0031-0000
+<end
+#e0062~(ZOO4)~~~~~~~~~~
+<se0005
+<pc0049-0038-0000
+<end
+#e0063~(ZOO5)~~~~~~~~~~
+<se0005
+<pc0052-0039-0000
+<end
+#e0064~(ZOO6)~~~~~~~~~~
+<se0005
+<pc0056-0040-0000
+<end
+#e0065~(ZOO7LAST)~~~~~~
+<ps
+Gahh!{
+You win!{
+You can bake me or boil me,+
+do whatever you like...{
+<se0005
+<pc0064-0036-0000
+<pc0046-0030-0000
+<pd0000
+<f+0052
+What?{
+You're not Pearl Carrier?{
+I'm so sorry for attacking you.+
+Please forgive me.+
+Oh, that lot will use Ironhead's name+
+to do whatever they please, I tell you.+
+You better watch out for yourself.{
+<end
+#e0066~(ZOO)~~~~~~
+I'm sorry about earlier.{
+<end
+#e0067~(ZOO)~~~~~~
+<pc0057-0031-0129
+<pc0060-0031-0129
+<pc0051-0032-0129
+<pc0054-0031-0129
+<pc0049-0038-0129
+<pc0052-0039-0129
+<pc0056-0040-0129
+<end
+#e0068~(KIRETU)~~~~~~
+<ij0011-0120
+<fj0053-0070
+There was an earthquake a while ago,+
+and it caused this crack to appear.{
+<fj0050-0069
+<end
+#e0069~(KIRETU)~~~~~~
+<ek
+<se0015
+<wa0040
+<se0005
+<pc0091-0061-0000
+Woah!+
+<wa0040
+<f+0053
+Another earthquake...{
+There's been a lot of them lately.{
+<fj0053-0070
+<end
+#e0070~(KIRETU)~~~~~~~~~~
+Man, that earthquake just now was crazy...+
+Way bigger than the others...{
+<end
+#e0071~(SETUMEISYO)~~~~~~
+Do you understand what a pearl is now?{
+<end
+#e0072~(PINKY)~~~~~~~~~~~
+<ij0011-0111
+<fj0066-0106
+<fj0064-0098
+<fj0063-0097
+<ij0008-0096
+
+<fj0061-0093
+<fj0060-0092
+My daddy works at the food storehouse!{
+<end
+#e0073~(PINKYMAMA)~~~~~~
+<ij0011-0112
+<fj0066-0105
+<fj0063-0100
+<fj0060-0091
+<fj0059-0090
+Where could my daughter have wandered off to?+
+There have been so many earthquakes lately,+
+I'm so worried.{
+<end
+#e0074~(CARRY)~~~~~~~~~~
+<ij0011-0116
+<ij0009-0101
+<ij0007-0082
+<ij0006-0079
+<fj0065-0102
+<fj0058-0083
+<fj0057-0080
+<fj0056-0077
+You want a pearl? Well, you're gonna have to+
+come with something to offer as a tribute. {
+<ij0002-0076
+<end
+#e0075~(KASHIPAN)~~~~~~~
+<fj0055-0000
+You see something gleaming...{
+<f+0055
+<i+0002
+Got a [Sandwich Dollar].{
+<end
+#e0076~(CARRY)~~~~~~~~~~
+Oh, is that a Sandwich Dollar on you?+
+Alright, I'll accept that as tribute.{
+<i-0002
+<i+0005
+You got a [Pearl].{
+<f+0056
+Now, this is a bit of a sudden job, but+
+you need to go to the food storehouse and+
+fetch a [Shrimp Platter].+
+It's an order from Ironhead.{
+<end
+#e0077~(CARRY)~~~~~~~~~~~
+Run along to the food storehouse and+
+ask for a [Shrimp Platter].+
+Ironhead's orders.{
+<end
+#e0078~(FOODS)~~~~~~~~~~~
+What?+
+A [Shrimp Platter], you say?{
+Our food supplies are rapidly dwindling...{
+But if you're asking, well, here you go.{
+<i+0006
+You got a [Shrimp Platter].{
+<end
+#e0079~(CARRY)~~~~~~~~~~~
+<i-0006
+You handed over the [Shrimp Platter].{
+Heh heh... Looks delicious.+
+I'll go give this to Ironhead,+
+so you wait here.{
+<fo
+<wa0040
+<ma
+<wa0080
+<fi
+<nm
+<f+0057
+<fj0057-0080
+<end
+#e0080~(CARRY)~~~~~~~~~~~
+Looks like he wants a [Crab Platter] now.+
+Go get one, kid.{
+<end
+#e0081~(FOODS)~~~~~~~~~~~
+What?+
+You want a [Crab Platter] this time?{
+There's a food shortage going on right now.+
+Think about other people too.+
+Or is this hush money for my secret?{
+......{
+Take it, please.{
+<i+0007
+You got a [Crab Platter].{
+<end
+#e0082~(CARRY)~~~~~~~~~~~
+<i-0007
+You handed over the [Crab Platter].{
+Hmm... This looks delicious, too.+
+I'll go give this to Ironhead,+
+so you wait here.{
+<fo
+<wa0040
+<ma
+<wa0080
+<fi
+<nm
+<f+0058
+<fj0058-0083
+<end
+#e0083~(CARRY)~~~~~~~~~~~
+Next up is a [Globefish Platter].+
+Like I said, Ironhead's orders.{
+<end
+#e0084~(FOODS)~~~~~~~~~~~
+Hold on a minute!{
+[Globefish Platter], you say?{
+You've had so much to eat already,+
+isn't that enough?+
+Even for hush money, this is too far.{
+......{
+Oh...?{
+Hey, that's my pearl, isn't it!+
+Why do you have it?{
+Oh, I see,{
+I see how it is...+
+You're trying to steal my job, aren't you!{
+Give it up, you can't do that.+
+Give me my pearl back.{
+<i-0005
+The pearl was taken from you...{
+<f+0059
+<end
+#e0085~(FOODS)~~~~~~~~~~~
+There's a serious food shortage right now.+
+If we don't manage this situation properly,+
+we'll all starve to death...{
+<end
+#e0086~~~~~~~~~~~
+<end
+#e0087~~~~~~~~~~~
+So, you found a pearl?{
+This means that you, too, are now a citizen+
+of Ironhead's realm.{
+<end
+#e0088~~~~~~~~~~~
+<ij0011-0119
+<fj0066-0123
+You see the guy above us wearing that+
+self-important expression?+
+That's Pearl Carrier.+
+He says he's Ironhead's right-fin man,+
+but I don't know about that...{
+<end
+#e0089~(FOODS)~~~~~~~~~~~
+I was a fool to have relied on you...{
+<end
+#e0090~(PINKYMAMA)~~~~~~~~~~~
+<ek
+<se0015
+<wa0040
+Ah!{
+<se0005
+<pc0037-0067-0000
+<f+0060
+<fj0060-0091
+<end
+#e0091~(PINKYMAMA)~~~~~~~~~~~
+It seems like something collapsed somewhere+
+because of the earthquake just now...+
+I hope Pinky is safe?{
+<end
+#e0092~(PINKY)~~~~~~~~~~~
+The ground suddenly collapsed,+
+and I fell down.+
+Did you come to save me?{
+You're so nice!{
+<se0005
+<pc0037-0067-0129
+<f+0061
+Ah!{
+......{
+We got trapped.+
+...What do we do?+
+<end
+#e0093~(PINKY)~~~~~~~~~~~
+I wonder if we could break this wall+
+here somehow...{
+<end
+#e0094~~~~~~~~~~~
+[Food Storehouse]{
+<end
+#e0095~(CONDENSA)~~~~~~~~~~~
+<fj0062-0000
+You see something gleaming...{
+<f+0062
+<i+0008
+Got the [Capacitor].{
+<se0005
+<pc0111-0023-0224
+<pc0114-0021-0224
+<end
+#e0096~(PINKY)~~~~~~~~~~~
+I thought I'd never get out of there...{
+Thank you so much!+
+Come over to my home later!{
+<fo
+<wa0040
+<ma
+<wa0080
+<cm0030-0130-0068
+<fi
+<nm
+<f+0063
+<end
+#e0097~(PINKY)~~~~~~~~~~~
+Here, you can have this.{
+<i+0009
+<f+0064
+You received a [Globefish Platter].{
+You see, this place got isolated from+
+the open ocean because of all the+
+earthquakes that have been happening+
+recently.{
+Now, if survival of the fittest went on,+
+soon nobody'd be left, right?+
+So to make sure that doesn't happen,+
+Ironhead took charge of this place.+
+If we don't manage food supplies properly,+
+it's The End for our world.+
+Remember that, ok?{
+<end
+#e0098~(PINKY)~~~~~~~~~~~
+Thanks for earlier!{
+<end
+#e0099~(FOODS)~~~~~~~~~~~
+I heard you saved our girl.{
+...Thank you.{
+<end
+#e0100~(PINKYMAMA)~~~~~~~~~~~
+I heard that you saved our daughter.+
+Thank you so much.{
+<end
+#e0101~(CARRY)~~~~~~~~~~~
+<i-0009
+You handed over the [Globefish Platter].{
+Took you long enough, eh?+
+I got darn well tired of waiting.{
+I'll go give this to Ironhead right away,+
+so you just stay put here.{
+<fo
+<wa0040
+<ma
+<wa0080
+<cm0027-0112-0093
+<fi
+<nm
+<f+0065
+<end
+#e0102~(CARRY)~~~~~~~~~~~
+Ow ow ow ow......{
+The globefish poison...{
+I-I'm... numb all over...{
+<end
+#e0103~~~~~~~~~~~
+<ij0011-0121
+No matter how much you attack,+
+if your level is too low, and...{
+<se0000
+you hear a sound like that,+
+it means your attack ain't getting through.{
+<end
+#e0104~(FOODS)~~~~~~~~~~~
+If anything happens to Ironhead,+
+we're done for over here, too.+
+All that's left now is for our food supplies+
+to run out...{
+Or for a big earthquake to come and+
+destroy this place...{
+At least I'll get to spend my final moments+
+with my family...{
+<end
+#e0105~(PINKYMAMA)~~~~~~~~~~~
+My husband is no longer going to work,+
+and has shut himself up at home.+
+Did something happen?{
+<end
+#e0106~(PINKY)~~~~~~~~~~~
+I wonder if there's any way to escape+
+from this place.{
+It would be nice if an earthquake+
+conveniently opened up a path,+
+but then again, that could turn dangerous. {
+By the way, where did you come from?{
+<end
+#e0107~~~~~~~~~~~
+You beat Ironhead?+
+Whoa, man, that's cool.+
+So what now?{
+<end
+#e0108~~~~~~~~~~~
+Hey, Johnny!+
+I thought you'd forgotten aaalll about me!{
+...Huh?+
+Ya really don't remember me?+
+Maannn, seriously...+
+I'm Ben, dude!{
+And what's up with you?+
+Ya look like a squid in that get-up.+
+...Aaanyways,+
+let's get outta this cramped place.+
+The [Ship] we came in on should be+
+somewhere around here.{
+<i+0010
+Ben joined you.{
+<cm0040-0000-0000
+<end
+#e0109~(UFO)~~~~~~~~~~~
+There's a star-shaped cavity here.+
+Looks like...a starfish?{
+<ij0010-0110
+<end
+#e0110~(BEN)~~~~~~~~~~~
+That ain't a starfish!+
+It's meee!{
+Come on, Johnny, get on board.{
+...Huh?{
+......+
+Where are we going, you ask?{
+We're going home. Isn't that obvious?+
+C'mon, get in already.{
+<cm0039-0000-0000
+<i+0011
+...You boarded the [Ship].{
+<end
+#e0111~(PINKY)~~~~~~~~~~~
+Eep!{
+...You scared me.+
+That's a funny-looking vehicle.+
+Oh, we can escape with this?{
+<ec
+<cm0030-0000-0000
+Got Pinky boarded.{
+<end
+#e0112~(PINKYMAMA)~~~~~~~~~~~
+Escape, you say?{
+We finally got used to living here,+
+but if we could return to the ocean, then...{
+<ec
+<cm0031-0000-0000
+Got Pinky's mom boarded.{
+<end
+#e0113~(FOODS)~~~~~~~~~~~
+What? Escape?{
+Oh, wonderful!+
+Looks like you were our saviour all along.+
+I've been rude to you on many occasions.+
+Please forgive me.{
+<ec
+<cm0004-0000-0000
+Got Fooze boarded.{
+<end
+#e0114~(ZOO)~~~~~~~~~~~
+<pf
+Is that a rocket?+
+Can't quite say why it is,+
+but it looks a tad misshapen to me.{
+What?+
+You'll take me with you?{
+<ec
+<cm0005-0000-0000
+Got Zuu boarded.{
+<se0015
+<le
+<f+0067
+<pd0004
+An earthquake!+
+We must hurry to the others!{
+<end
+#e0115~(OKU)~~~~~~~~~~~
+Wha--?{
+<ec
+<cm0000-0000-0000
+...Got them boarded.{
+<end
+#e0116~(CARRY)~~~~~~~~~~~
+Sorry, it was all my fault!+
+Forgive me!+
+Please, don't come at me with that scary+
+machine!{
+<ec
+<cm0027-0000-0000
+...Got Pearl Carrier boarded.{
+<end
+#e0117~(SETUMEI)~~~~~~~~~~~
+Hey--{
+<ec
+<cm0003-0000-0000
+...Got them boarded.{
+<end
+#e0118~(ONBIN)~~~~~~~~~~~
+What's that?+
+A spaceship?{
+Cooool!{
+<ec
+<cm0002-0000-0000
+...Got them boarded.{
+<end
+#e0119~(ERASOU)~~~~~~~~~~~
+Huh?+
+We can escape from here?{
+Man, I don't wanna be sitting together+
+with Pearl Carrier.{
+<ec
+<cm0035-0000-0000
+Got them boarded anyways.{
+<end
+#e0120~(JISIN)~~~~~~~~~~~
+Whoa--{
+<ec
+<cm0015-0000-0000
+...Got them boarded.{
+<end
+#e0121~(OTO)~~~~~~~~~~~
+Let me on, too!{
+<ec
+<cm0038-0000-0000
+...Got them boarded.{
+<end
+#e0122~(TONGARI)~~~~~~~~~~~
+<ij0001-0000
+You see something gleaming...{
+<i+0001
+Got the [Pointed Hat].{
+<end
+#e0123~~~~~~~~~~~
+You beat Ironhead?+
+And you're so tiny, too. Impressive.{
+<end
+#e0124~~~~~~~~~~~
+<pc0107-0065-0224
+<pc0105-0066-0000
+<pc0106-0066-0000
+<end
+#e0125~~~~~~~~~~~
+[Danger - Do Not Enter]{
+<end
+#e0126~~~~~~~~~~~
+Hmmm, you look quite sharp in that hat.{
+In more ways than one...{
+<end
+#e0127~~~~~~~~~~~
+You're looking for a pearl?{
+So am I...{
+<end
+#e0128~~~~~~~~~~~
+Oh,{
+have you been getting stronger recently?{
+<end
+#e0129~~~~~~~~~~~
+A Globefish platter?{
+I'd suggest you don't even look for one.+
+Those things have poison in them, you know.{
+<end
+#e0130~~~~~~~~~~~
+Oh,+
+you found a pearl?!{
+I-I'm so jealous...{
+<end
+#e0131~~~~~~~~~~~
+Ahh...{
+If only I could swim around, too...{
+<end
+
+#e1000~(BOSS)~~~~~~~~~~~
+<ej0011-1004
+<ij0011-1003
+<fj0066-1002
+<pf
+And who might you be...?{
+<ft0001-0027
+That's him!+
+That's the guy who's extorting food from+
+the storehouse!+
+And look, he even tricked me and gave me+
+poisoned food, just now!{
+<ft0002-0000
+Is that so?{
+You better get ready for a beatdown, kid!{
+<bo0000
+<pd0002
+<pc0114-0091-0129
+<pc0114-0092-0129
+<ft0000-0000
+<end
+#e1001~(BOSS)~~~~~~~~~~~
+<pf
+...What?+
+Pearl Carrier was the one extorting food,+
+you say?+
+Is that true?{
+...I see.{
+Listen, can you do me a favour?+
+...Wait, I mean, this is an order.+
+I need you to take over and run this place+
+for me.+
+Ever since this place was isolated from the+
+open ocean, I haven't had anything to eat.{
+From the size of my body, you can probably+
+tell that I need to eat a lot more than+
+most people.+
+But these days, I don't even have the+
+energy to go around.+
+I'm counting on you. Thanks.+
+<f+0066
+<pd0003
+<pc0114-0091-0000
+<pc0114-0092-0000
+<cm0004-0133-0068
+<end
+#e1002~(BOSS)~~~~~~~~~~~
+I'm counting on you. Thanks.{
+<end
+#e1003~(BOSS)~~~~~~~~~~~
+...Oh, it's you.+
+I thought for sure it was my time that+
+had come.{
+What?+
+Get on this and escape?{
+......{
+Let me think about it for a bit.{
+<end
+#e1004~(BOSS)~~~~~~~~~~~
+......{
+I think I'm a bit too big...+
+Are you sure I can get on?{
+---whoa, hey, what are you doing!{
+<ec
+Ironhead was squeezed into the ship.{
+<ge
+<end
+
+#e2001~(ITEM)~~~~~~~~~~~
+[Pointed Hat]{
+Lets you attack enemies by headbutting them.{
+<end
+#e2002~(ITEM)~~~~~~~~~~~
+[Sandwich Dollar]{
+It's tough and doesn't seem to be edible.{
+<end
+#e2003~(ITEM)~~~~~~~~~~~
+[Strange Liquid]{
+Looks like it's something to drink.{
+Drink it?
+<yn3000
+<end
+#e2004~(ITEM)~~~~~~~~~~~
+[Note on Pearls]{
+Something's written...{
+1. Those who possess a pearl must not be+
+   attacked unnecessarily.{
+2. Ironhead's orders shall be conveyed+
+   through Pearl Carrier.{
+3. Do not lose your pearl.{
+<end
+#e2005~(ITEM)~~~~~~~~~~~
+[Cracked Pearl]{
+Proof you are a subject of Ironhead's realm.+
+With it you will not be attacked.{
+<end
+#e2006~(ITEM)~~~~~~~~~~~
+[Shrimp Platter]{
+Looks delicious.+
+Depends on who you ask, though...{
+<end
+#e2007~(ITEM)~~~~~~~~~~~
+[Crab Platter]{
+Looks even more delicious.+
+An indulgent dish.{
+<end
+#e2008~(ITEM)~~~~~~~~~~~
+[Capacitor]{
+Hold down the Z key to perform a charge dash.{
+<end
+#e2009~(ITEM)~~~~~~~~~~~
+[Globefish Platter]{
+The most extravagant meal of all(?)+
+The risk of poison is concerning, though.{
+<end
+#e2010~(ITEM)~~~~~~~~~~~
+[Ben]{
+<ij0011-3001
+What're you lookin' at?+
+Is there something on my face?+
+Hurry up, we have a [Ship] to find.{
+<end
+#e2011~(ITEM)~~~~~~~~~~~
+[Ship]{
+Spacious interiors, but a small hitbox.+
+A strange 'ship' indeed.{
+<end
+#e3000~(ITEM:KASIPAN)~~~~~~~~~~~
+<e+
+Your health was refilled!{
+<i-0003
+<end
+#e3001~(ITEM:BEN)~~~~~~~~~~~
+If there's any seafood you wanna bring along+
+with you, just give 'em a holler, yeah?{
+<end
+
+#e4000~(ENDING)~~~~~~~~~~~
+<pf
+<fo
+<wa0040
+<ma
+Oh, come on, Johnny!{
+You really brought waayyy too much on board.{
+This fishy smell ain't my favourite.+
+...Honestly.{
+<*
+<end

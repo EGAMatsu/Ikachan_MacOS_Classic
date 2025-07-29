@@ -12,25 +12,18 @@ RECT grcFull = { 0, 0, SURFACE_WIDTH, SURFACE_HEIGHT };
 int mag;
 bool fullscreen;
 
-//DirectDraw objects
-// LPDIRECTDRAW lpDD;
-// LPDIRECTDRAWSURFACE frontbuffer;
-// LPDIRECTDRAWSURFACE backbuffer;
-// LPDIRECTDRAWCLIPPER clipper;
-
-//"DirectDraw" objects
-//SDL_Renderer *renderer;
-
-//Surfaces
+/* Rendering */
 #define MAX_SURFACE 512
-// LPDIRECTDRAWSURFACE surf[MAX_SURFACE] = {NULL};
-//SDL_Texture* surf[MAX_SURFACE] = {NULL};
+BitMap surf[MAX_SURFACE];     // 1-bit surfaces
+Ptr    surfData[MAX_SURFACE]; // backing memory for each bitmap
+
+GrafPtr renderer = NULL;      // destination port
 
 //Loaded font
 // HFONT font;
 
 //Window rect and size
-RECT backbuffer_rect;
+Rect backbuffer_rect;
 int scaled_window_width;
 int scaled_window_height;
 
@@ -44,128 +37,28 @@ void SetClientOffset(int width, int height)
 	client_y = height;
 }
 
-#if 0
-//End of frame function
-bool Flip_SystemTask_IKA(HWND hWnd)
+/* Helpers */
+bool CreateSurface(int index, short width, short height)
 {
-	//Run system tasks while waiting for next frame
-	static unsigned long timePrev;
-	while (GetTickCount() < (timePrev + 20))
-	{
-		Sleep(1);
-		if (!SystemTask_IKA())
-			return false;
-	}
+    long rowBytes = ((width + 15) >> 4) << 1; // 16-bit aligned
+    long size = rowBytes * height;
 
-	if ((timePrev + 100) < GetTickCount())
-		timePrev = GetTickCount();
-	else
-		timePrev += 20;
-	
-	//Blit backbuffer to front buffer
-	RECT dst_rect;
-	GetWindowRect(hWnd, &dst_rect);
-	dst_rect.left += client_x;
-	dst_rect.top += client_y;
-	dst_rect.right = dst_rect.left + scaled_window_width;
-	dst_rect.bottom = dst_rect.top + scaled_window_height;
-	frontbuffer->Blt(&dst_rect, backbuffer, &backbuffer_rect, DDBLT_WAIT, NULL);
-	return true;
+    surfData[index] = NewPtr(size);
+    if (!surfData[index])
+        return false;
+
+    surf[index].baseAddr = surfData[index];
+    surf[index].rowBytes = rowBytes;
+    SetRect(&surf[index].bounds, 0, 0, width, height);
+    return true;
 }
 
-//DirectDraw interface
-bool StartDirectDraw(HWND hWnd, int wndSize)
+void DrawSurface(int index, const Rect *srcRect, const Rect *dstRect)
 {
-	//Create DirectDraw instance
-	if (DirectDrawCreate(NULL, &lpDD, NULL) != DD_OK)
-		return false;
-
-	//Set cooperative level
-	switch (wndSize)
-	{
-		case WS_FULLSCREEN:
-			mag = 2;
-			fullscreen = true;
-			lpDD->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_EXCLUSIVE);
-			lpDD->SetDisplayMode(SURFACE_WIDTH * mag, SURFACE_HEIGHT * mag, 16);
-			break;
-		case WS_320x240:
-			mag = 1;
-			fullscreen = false;
-			lpDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
-			break;
-		case WS_640x480:
-			mag = 2;
-			fullscreen = false;
-			lpDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
-			break;
-	}
-
-	//Initialize window rects and sizes
-	backbuffer_rect.left = 0;
-	backbuffer_rect.top = 0;
-	backbuffer_rect.right = SURFACE_WIDTH * mag;
-	backbuffer_rect.bottom = SURFACE_HEIGHT * mag;
-
-	scaled_window_width = SURFACE_WIDTH * mag;
-	scaled_window_height = SURFACE_HEIGHT * mag;
-
-	//Create screen buffers
-	DDSURFACEDESC ddsd;
-
-	//Frontbuffer
-	memset(&ddsd, 0, sizeof(DDSURFACEDESC));
-	ddsd.dwSize = sizeof(DDSURFACEDESC);
-	ddsd.dwFlags = DDSD_CAPS;
-	ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
-	ddsd.dwBackBufferCount = 0;
-
-	if (lpDD->CreateSurface(&ddsd, &frontbuffer, NULL) != DD_OK)
-		return false;
-
-	//Backbuffer
-	memset(&ddsd, 0, sizeof(DDSURFACEDESC));
-	ddsd.dwSize = sizeof(DDSURFACEDESC);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-	ddsd.dwWidth = SURFACE_WIDTH * mag;
-	ddsd.dwHeight = SURFACE_HEIGHT * mag;
-
-	if (lpDD->CreateSurface(&ddsd, &backbuffer, NULL) != DD_OK)
-		return false;
-
-	//Create clipper
-	lpDD->CreateClipper(0, &clipper, NULL);
-	clipper->SetHWnd(0, hWnd);
-	frontbuffer->SetClipper(clipper);
-	return true;
+    CopyBits(&surf[index], &renderer->portBits,
+             srcRect, dstRect, srcCopy, NULL);
 }
 
-void EndDirectDraw(HWND hWnd)
-{
-	//Release surfaces
-	for (int i = 0; i < MAX_SURFACE; i++)
-	{
-		if (surf[i] != NULL)
-		{
-			surf[i]->Release();
-			surf[i] = NULL;
-		}
-	}
-
-	//Release frontbuffer
-	if (frontbuffer != NULL)
-		frontbuffer->Release();
-
-	//Exit fullscreen
-	if (fullscreen)
-		lpDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
-
-	//Release DirectDraw instance
-	if (lpDD != NULL)
-		lpDD->Release();
-}
-#endif
 
 //End of frame function
 bool Flip_SystemTask_IKA()
@@ -175,16 +68,28 @@ bool Flip_SystemTask_IKA()
 	return true;
 }
 
-bool StartDirectDraw(void *window, int wndSize)
+/* Create window */
+bool StartDirectDraw(WindowPtr window, int wndSize)
 {
-	/* TODO: IMPLEMENT FULLY */
+    renderer = &((WindowPeek)window)->port;
+    SetPort(renderer);
 
-	// TODO scaling options (1x for now)
-	mag = 1;
+    switch (wndSize)
+    {
+        case WS_FULLSCREEN: mag = 2; fullscreen = true; break;
+        case WS_320x240:    mag = 1; fullscreen = false; break;
+        case WS_640x480:    mag = 2; fullscreen = false; break;
+    }
 
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	return true;
+    scaled_window_width  = SURFACE_WIDTH * mag;
+    scaled_window_height = SURFACE_HEIGHT * mag;
+
+    SetRect(&backbuffer_rect, 0, 0, scaled_window_width, scaled_window_height);
+
+    return CreateSurface(0, scaled_window_width, scaled_window_height);
 }
+
+
 //Surface creation
 bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 {
@@ -248,10 +153,9 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 	//Release image handle
 	DeleteObject(handle);
 	return true;
-#else
-
-	return true;
 #endif
+
+	return false;
 }
 
 bool MakeSurface_Generic(int bxsize, int bysize, int surf_no)

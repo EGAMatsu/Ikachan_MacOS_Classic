@@ -26,13 +26,41 @@ unsigned long gMouse;
 
 //Filepath
 char gModulePath[MAX_PATH];
+FSSpec appSpec;
 
-int Random(int min, int max)
+/* Get working folder */
+bool InitModulePath()
 {
-	const int range = max - min + 1;
-	return (rand() % range) + min;
+    HParamBlockRec hpb;
+    Str255 volName;
+
+    memset(&hpb, 0, sizeof(hpb));
+    hpb.volumeParam.ioVRefNum = 0;
+    hpb.volumeParam.ioNamePtr = volName;	/* The path is just the volume, so it HAS to be at root. */
+
+    if (PBHGetVInfoSync(&hpb) != noErr)
+        return false;
+
+    short len = volName[0];
+    memcpy(gModulePath, volName + 1, len);
+    gModulePath[len++] = ':';
+    gModulePath[len] = '\0';
+
+    return true;
 }
 
+/* Path conversion */
+void ConvertPathToMac(char *path)
+{
+    while (*path)
+    {
+        if (*path == '/')
+            *path = ':';
+        ++path;
+    }
+}
+
+/* String conversion */
 unsigned char* CToPascalStr(const char* cstr) {
     static unsigned char pstr[256]; // static so it's valid after return
     size_t len = strlen(cstr);
@@ -40,6 +68,12 @@ unsigned char* CToPascalStr(const char* cstr) {
     pstr[0] = (unsigned char)len;
     memcpy(&pstr[1], cstr, len);
     return pstr;
+}
+
+int Random(int min, int max)
+{
+	const int range = max - min + 1;
+	return (rand() % range) + min;
 }
 
 int main(int argc, char** argv)
@@ -51,6 +85,7 @@ int main(int argc, char** argv)
 	RECT rcFull = { 0, 0, 0, 0 };
 
 	gModulePath[0] = '.';
+	InitModulePath();
 
 	InitGraf(&thePort);
     InitFonts();
@@ -65,29 +100,12 @@ int main(int argc, char** argv)
 	bounds.bottom = bounds.top  + SURFACE_HEIGHT;
 	bounds.right  = bounds.left + SURFACE_WIDTH;
 
-	ikaWindow = NewWindow(nil, &bounds, CToPascalStr("Ikachan"), true, noGrowDocProc, (WindowPtr)-1, false, 0);
+	ikaWindow = NewWindow(nil, &bounds, CToPascalStr(gModulePath), true, noGrowDocProc, (WindowPtr)-1, false, 0);
 
-	/*if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	if (!StartDirectDraw(ikaWindow, gWndSize))
 	{
-		fprintf(stderr, "SDL init fail: %s\n", SDL_GetError());
-		goto Fail;
+		return 404;
 	}
-
-	window = SDL_CreateWindow(lpCaption, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SURFACE_WIDTH, SURFACE_HEIGHT, SDL_WINDOW_SHOWN);
-	if (!window)
-	{
-		fprintf(stderr, "SDL create window fail: %s\n", SDL_GetError());
-		goto Fail_Subsystem;
-	}
-
-	if (!StartDirectDraw(window, gWndSize))
-	{
-		goto Fail_Window;
-	}
-
-	//Set rects
-	rcFull.right = SURFACE_WIDTH;
-	rcFull.bottom = SURFACE_HEIGHT;*/
 
 	ShowWindow(ikaWindow);
     SetPort(ikaWindow);
@@ -108,11 +126,6 @@ int main(int argc, char** argv)
 
 	// cleanup
 	status = EXIT_SUCCESS;
-Fail_Window:
-	//SDL_DestroyWindow(window);
-Fail_Subsystem:
-	//SDL_Quit();
-Fail:
 	return status;
 }
 

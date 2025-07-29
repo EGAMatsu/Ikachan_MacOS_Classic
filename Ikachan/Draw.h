@@ -1,5 +1,7 @@
 #pragma once
 //#include <windows.h>
+#include "macInclude.h"
+
 #include "FakeRect.h"
 #include "System.h"
 
@@ -72,7 +74,7 @@ void SetClientOffset(int width, int height);
 //bool Flip_SystemTask_IKA(HWND hWnd);
 bool Flip_SystemTask_IKA();
 //bool StartDirectDraw(HWND hWnd, int wndSize);
-bool StartDirectDraw(void *window, int wndSize);
+bool StartDirectDraw(WindowPtr window, int wndSize);
 //void EndDirectDraw(HWND hWnd);
 bool MakeSurface_File(const char* name, int surf_no);
 bool MakeSurface_Generic(int bxsize, int bysize, int surf_no);
