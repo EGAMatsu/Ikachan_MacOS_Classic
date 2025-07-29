@@ -8,7 +8,7 @@ LDFLAGS = -g
 TARGNM	= ika
 TARGET  = $(TARGNM).code.bin
 
-all: $(TARGET)
+all: $(TARGET) $(TARGNM).dsk
 
 $(TARGET): Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
 	$(CXX) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(LDFLAGS)
@@ -53,3 +53,12 @@ System.o: System.cpp System.h Draw.h FakeRect.h Sound.h Generic.h \
 .SUFFIXES: .cpp .o
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c $<
+
+# Lifted from ClassiCube
+REZFLAGS=-I$(Retro68)/RIncludes
+$(TARGNM).bin $(TARGNM).APPL $(TARGNM).dsk: $(TARGET)
+	Rez $(REZFLAGS) \
+		--copy "$(TARGNM).code.bin" \
+		"Resource/IKA.R" \
+		-t "APPL" -c "????" \
+		-o $(TARGNM).bin --cc $(TARGNM).APPL --cc $(TARGNM).dsk
