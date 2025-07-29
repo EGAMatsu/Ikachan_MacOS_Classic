@@ -7,7 +7,7 @@
 #include "Game.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
 
 #if 1
 //Window name
@@ -33,14 +33,14 @@ int Random(int min, int max)
 int main(int argc, char** argv)
 {
 	int status = EXIT_FAILURE;
-	SDL_Window *window = NULL;
+	//SDL_Window *window = NULL;
 
 	RECT rcLoading = { 0, 0, 64, 8 };
 	RECT rcFull = { 0, 0, 0, 0 };
 
 	gModulePath[0] = '.';
 
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	/*if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		fprintf(stderr, "SDL init fail: %s\n", SDL_GetError());
 		goto Fail;
@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 
 	//Set rects
 	rcFull.right = SURFACE_WIDTH;
-	rcFull.bottom = SURFACE_HEIGHT;
+	rcFull.bottom = SURFACE_HEIGHT;*/
 
 	//Load the "LOADING" text
 	MakeSurface_File("Pbm/Loading2.pbm", SURFACE_ID_LOADING2);
@@ -79,9 +79,9 @@ int main(int argc, char** argv)
 	// cleanup
 	status = EXIT_SUCCESS;
 Fail_Window:
-	SDL_DestroyWindow(window);
+	//SDL_DestroyWindow(window);
 Fail_Subsystem:
-	SDL_Quit();
+	//SDL_Quit();
 Fail:
 	return status;
 }
@@ -91,9 +91,9 @@ bool SystemTask()
 	return true;
 }
 
-void ProcessSystemEvent(SDL_Event *e)
+void ProcessSystemEvent(void *e)
 {
-	switch (e->type) {
+	/*switch (e->type) {
 	case SDL_KEYDOWN:
 		switch (e->key.keysym.sym) {
 			case SDLK_LEFT:
@@ -144,7 +144,7 @@ void ProcessSystemEvent(SDL_Event *e)
 				break;
 		}
 		break;
-	}
+	}*/
 }
 #else
 //Windows objects

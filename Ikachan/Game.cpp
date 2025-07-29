@@ -14,6 +14,8 @@
 #include "Boss.h"
 #include "Effect.h"
 #include "System.h"
+
+#include <time.h>
 #include <stdio.h>
 
 unsigned long gKeyTrg, gMouseTrg, gMouseTrg2;
@@ -54,11 +56,11 @@ unsigned long CountFramePerSecound()
 
 	if (first)
 	{
-		wait = SDL_GetTicks();
+		wait = clock();
 		first = false;
 	}
 
-	current_tick = SDL_GetTicks();
+	current_tick = clock();
 	++count;
 
 	if (wait + 1000 <= current_tick)
@@ -146,15 +148,15 @@ bool Game() // TODO hWnd
 	//Opening
 	while (mode == GAMEMODE_OPENING)
 	{
-		SDL_Event e;
+		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
 			if (e.type == SDL_QUIT) {
 				return true;
 			}
-		}
+		}*/
 		//Start frame
-		tick = SDL_GetTicks();
+		tick = clock();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);
@@ -191,13 +193,13 @@ bool Game() // TODO hWnd
 	next_mode = GAMEMODE_INTRO;
 	while (mode == GAMEMODE_LOAD)
 	{
-		SDL_Event e;
+		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
-		}
+		}*/
 		
 		//Start frame
-		tick = SDL_GetTicks();
+		tick = clock();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);
@@ -241,15 +243,15 @@ bool Game() // TODO hWnd
 	//Intro
 	while (mode == GAMEMODE_INTRO)
 	{
-		SDL_Event e;
+		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
 			if (e.type == SDL_QUIT) {
 				return true;
 			}
-		}
+		}*/
 		//Start frame
-		tick = SDL_GetTicks();
+		tick = clock();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x00FFFF);
@@ -293,25 +295,25 @@ bool Game() // TODO hWnd
 	//Enter game loop
 	while (mode != GAMEMODE_STAFF)
 	{
-		SDL_Event e;
+		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
 			if (e.type == SDL_QUIT) {
 				return true;
 			}
-		}
+		}*/
 		//Gameplay
 		while (mode == GAMEMODE_GAMEPLAY)
 		{
-			SDL_Event e;
+			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
 				if (e.type == SDL_QUIT) {
 					return true;
 				}
-			}
+			}*/
 			//Start frame
-			tick = SDL_GetTicks();
+			tick = clock();
 			PiyoPiyoControl(&piyocont);
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
@@ -414,15 +416,15 @@ bool Game() // TODO hWnd
 		//Inventory
 		while (mode == GAMEMODE_INVENTORY)
 		{
-			SDL_Event e;
+			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
 				if (e.type == SDL_QUIT) {
 					return true;
 				}
-			}
+			}*/
 			//Start frame
-			tick = SDL_GetTicks();
+			tick = clock();
 			PiyoPiyoControl(&piyocont);
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
@@ -448,15 +450,15 @@ bool Game() // TODO hWnd
 		//Editor
 		while (mode == GAMEMODE_EDITOR)
 		{
-			SDL_Event e;
+			/*SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
 				if (e.type == SDL_QUIT) {
 					return true;
 				}
-			}
+			}*/
 			//Start frame
-			tick = SDL_GetTicks();
+			tick = clock();
 			GetTrg();
 			CortBox(&grcFull, 0x000000);
 			
@@ -499,15 +501,15 @@ bool Game() // TODO hWnd
 	//Staff
 	while (mode == GAMEMODE_STAFF)
 	{
-		SDL_Event e;
+		/*SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
 			if (e.type == SDL_QUIT) {
 				return true;
 			}
-		}
+		}*/
 		//Start frame
-		tick = SDL_GetTicks();
+		tick = clock();
 		PiyoPiyoControl(&piyocont);
 		GetTrg();
 		CortBox(&grcFull, 0x000000);

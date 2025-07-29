@@ -1,7 +1,6 @@
 #include "Draw.h"
 #include "FakeRect.h"
 //#include <ddraw.h>
-#include <SDL2/SDL.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
@@ -20,12 +19,12 @@ bool fullscreen;
 // LPDIRECTDRAWCLIPPER clipper;
 
 //"DirectDraw" objects
-SDL_Renderer *renderer;
+//SDL_Renderer *renderer;
 
 //Surfaces
 #define MAX_SURFACE 512
 // LPDIRECTDRAWSURFACE surf[MAX_SURFACE] = {NULL};
-SDL_Texture* surf[MAX_SURFACE] = {NULL};
+//SDL_Texture* surf[MAX_SURFACE] = {NULL};
 
 //Loaded font
 // HFONT font;
@@ -171,38 +170,19 @@ void EndDirectDraw(HWND hWnd)
 //End of frame function
 bool Flip_SystemTask()
 {
-	//Run system tasks while waiting for next frame
-	static unsigned long timePrev;
-	while (SDL_GetTicks() < (timePrev + 20))
-	{
-		SDL_Delay(1);
-		if (!SystemTask())
-			return false;
-	}
-
-	if ((timePrev + 100) < SDL_GetTicks())
-		timePrev = SDL_GetTicks();
-	else
-		timePrev += 20;
-	
-	SDL_RenderPresent(renderer);
+	/* TODO: IMPLEMENT */
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 	return true;
 }
 
-bool StartDirectDraw(SDL_Window *window, int wndSize)
+bool StartDirectDraw(void *window, int wndSize)
 {
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
-	// Create SDL renderer
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if (!renderer)
-	{
-		fprintf(stderr, "SDL create renderer fail: %s\n", SDL_GetError());
-		return false;
-	}
+	/* TODO: IMPLEMENT FULLY */
 
 	// TODO scaling options (1x for now)
 	mag = 1;
 
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 	return true;
 }
 //Surface creation
@@ -269,41 +249,7 @@ bool MakeSurface_File(const char* name, int surf_no) //TODO: implement
 	DeleteObject(handle);
 	return true;
 #else
-	fprintf(stderr, "unfinished function: %s\n", __PRETTY_FUNCTION__);
 
-	//Get path
-	char path[MAX_PATH];
-	sprintf(path, "%s/%s", gModulePath, name);
-	
-	//Make sure a surface can be made here
-	if (surf_no > MAX_SURFACE)
-		return false;
-	if (surf[surf_no] != NULL)
-		return false;
-	
-	//Load image
-	SDL_Surface *s = SDL_LoadBMP(path);
-	if (s == NULL)
-		return false;
-
-	//Scale image (TODO unsupported yet!)
-	int src_x = 0;
-	int src_y = 0;
-	int src_w = s->w;
-	int src_h = s->h;
-
-	int dst_x = 0;
-	int dst_y = 0;
-	int dst_w = s->w * mag;
-	int dst_h = s->h * mag;
-
-	//Set surface colour key
-	SDL_SetColorKey(s, SDL_TRUE, 0);
-
-	surf[surf_no] = SDL_CreateTextureFromSurface(renderer, s);
-
-	//Release image handle
-	SDL_FreeSurface(s);
 	return true;
 #endif
 }
@@ -365,60 +311,15 @@ void BackupSurface(int surf_no, const RECT *rect)
 //Bitmap
 void PutBitmap3(const RECT *rcView, int x, int y, const RECT *rect, int surf_no)
 {
-	//Clip source rect
-	RECT rcWork = *rect;
-	if (x + rect->right - rect->left > rcView->right)
-		rcWork.right -= (x + rect->right - rect->left) - rcView->right;
-	if (x < rcView->left)
-	{
-		rcWork.left += rcView->left - x;
-		x = rcView->left;
-	}
-	if (y + rect->bottom - rect->top > rcView->bottom)
-		rcWork.bottom -= (y + rect->bottom - rect->top) - rcView->bottom;
-	if (y < rcView->top)
-	{
-		rcWork.top += rcView->top - y;
-		y = rcView->top;
-	}
-
-	//Get destination rect
-	RECT rcSet;
-	rcSet.left = x;
-	rcSet.top = y;
-	rcSet.right = x + rcWork.right - rcWork.left;
-	rcSet.bottom = y + rcWork.bottom - rcWork.top;
-
-	//Multiply rects
-	rcWork.left *= mag;
-	rcWork.top *= mag;
-	rcWork.right *= mag;
-	rcWork.bottom *= mag;
-
-	rcSet.left *= mag;
-	rcSet.top *= mag;
-	rcSet.right *= mag;
-	rcSet.bottom *= mag;
-
-	//Blit surface
-	SDL_Rect srcr = FakeRect_to_SDLRect(rcWork);
-	SDL_Rect dstr = FakeRect_to_SDLRect(rcSet);
-	SDL_RenderCopy(renderer, surf[surf_no], &srcr, &dstr);
+	/* TODO: IMPLEMENT */
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }
 
 //Cort box
 void CortBox(const RECT *rect, unsigned long col)
 {
-	SDL_SetRenderDrawColor(renderer, col & 0xFF, (col & 0xFF00) >> 8, (col & 0xFF0000) >> 16, (col & 0xFF000000) >> 24);
-	static RECT rcSet;
-	rcSet.left = rect->left * mag;
-	rcSet.top = rect->top * mag;
-	rcSet.right = rect->right * mag;
-	rcSet.bottom = rect->bottom * mag;
-	static SDL_Rect sr = FakeRect_to_SDLRect(rcSet);
-
-	//Blit rect
-	SDL_RenderFillRect(renderer, &sr);
+	/* TODO: IMPLEMENT */
+	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 }
 
 // TODO

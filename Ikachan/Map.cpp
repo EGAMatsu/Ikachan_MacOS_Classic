@@ -2,6 +2,9 @@
 #include "Draw.h"
 #include "Player.h"
 #include "Boss.h"
+
+#include <cstdlib>
+#include <cstring>
 #include <stdio.h>
 
 typedef struct BITMAPFILEHEADER

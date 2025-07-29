@@ -1,6 +1,7 @@
 #pragma once
 //#include <windows.h>
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
+#include <cstdlib>
 
 //Keys
 #define MOUSE_RIGHT (0x00000001)
@@ -39,4 +40,4 @@ extern char gModulePath[MAX_PATH];
 
 int Random(int min, int max);
 bool SystemTask();
-void ProcessSystemEvent(SDL_Event *e);
+void ProcessSystemEvent(void *e);

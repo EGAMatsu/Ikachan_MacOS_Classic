@@ -1,17 +1,20 @@
 .POSIX:
 .SUFFIXES:
 
-CXX=g++
+CXX=m68k-apple-macos-g++
 CXXFLAGS=-std=c++98 -Wpedantic -g
-LDFLAGS = -g -lSDL2 -lSDL2_image
+LDFLAGS = -g
 
-all: ika
+TARGNM	= ika
+TARGET  = $(TARGNM).code.bin
 
-ika: Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+all: $(TARGET)
+
+$(TARGET): Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
 	$(CXX) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(LDFLAGS)
 
 clean:
-	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(TARGET) $(TARGNM)
 
 # generated with <g++ -MM *.cpp>
 Boss.o: Boss.cpp Boss.h Map.h NpChar.h Effect.h EventScript.h Item.h \
