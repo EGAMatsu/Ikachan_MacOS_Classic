@@ -211,7 +211,7 @@ void PiyoPiyoProc()
 		gPiyoPiyo.tick = GetTickCount();
 	}
 #else
-	fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
+	//fprintf(stderr, "stubbed function: %s\n", __PRETTY_FUNCTION__);
 #endif
 }
 

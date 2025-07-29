@@ -3,12 +3,12 @@
 
 CXX=g++
 CXXFLAGS=-std=c++98 -Wpedantic -g
-LDFLAGS=-g -lSDL2
+LDFLAGS = -g -lSDL2 -lSDL2_image
 
 all: ika
 
 ika: Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
-	$(CXX) $(LDFLAGS) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o
+	$(CXX) -o $@ Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o $(LDFLAGS)
 
 clean:
 	rm -f Boss.o Dialog.o Draw.o Editor.o Effect.o EventScript.o FakeRect.o Flags.o Game.o Generic.o Item.o Map.o NpChar.o Opening.o PixelScript.o PiyoPiyo.o Player.o Sound.o System.o

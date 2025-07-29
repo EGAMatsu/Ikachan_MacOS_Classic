@@ -149,6 +149,9 @@ bool Game() // TODO hWnd
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
+			if (e.type == SDL_QUIT) {
+				return true;
+			}
 		}
 		//Start frame
 		tick = SDL_GetTicks();
@@ -241,6 +244,9 @@ bool Game() // TODO hWnd
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
+			if (e.type == SDL_QUIT) {
+				return true;
+			}
 		}
 		//Start frame
 		tick = SDL_GetTicks();
@@ -290,6 +296,9 @@ bool Game() // TODO hWnd
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
+			if (e.type == SDL_QUIT) {
+				return true;
+			}
 		}
 		//Gameplay
 		while (mode == GAMEMODE_GAMEPLAY)
@@ -297,6 +306,9 @@ bool Game() // TODO hWnd
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
+				if (e.type == SDL_QUIT) {
+					return true;
+				}
 			}
 			//Start frame
 			tick = SDL_GetTicks();
@@ -405,6 +417,9 @@ bool Game() // TODO hWnd
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
+				if (e.type == SDL_QUIT) {
+					return true;
+				}
 			}
 			//Start frame
 			tick = SDL_GetTicks();
@@ -436,6 +451,9 @@ bool Game() // TODO hWnd
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				ProcessSystemEvent(&e);
+				if (e.type == SDL_QUIT) {
+					return true;
+				}
 			}
 			//Start frame
 			tick = SDL_GetTicks();
@@ -484,6 +502,9 @@ bool Game() // TODO hWnd
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			ProcessSystemEvent(&e);
+			if (e.type == SDL_QUIT) {
+				return true;
+			}
 		}
 		//Start frame
 		tick = SDL_GetTicks();
